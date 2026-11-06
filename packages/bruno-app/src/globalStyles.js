@@ -302,7 +302,8 @@ const GlobalStyle = createGlobalStyle`
     padding: 0.625rem;
     position: fixed;
     transition: opacity 0.15s ease;
-    z-index: 100;
+    // Body-mounted variable popups must sit above modals (20), below autocomplete (50).
+    z-index: 30;
   }
 
   // Autocomplete hints dropdown container
@@ -343,6 +344,8 @@ const GlobalStyle = createGlobalStyle`
   .CodeMirror-hint-variable {
     display: flex;
     align-items: center;
+    min-width: 0;
+    overflow: hidden;
     font-size: 11px;
     font-weight: 500;
   }

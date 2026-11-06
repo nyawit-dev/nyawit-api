@@ -15,9 +15,12 @@ if (isDev) {
   }
 }
 
-const { format } = require('url');
 const { BrowserWindow, app, session, Menu, globalShortcut, ipcMain, nativeTheme, shell } = require('electron');
 const { setContentSecurityPolicy } = require('electron-util');
+const { getAppUrl, isAppUrl, restrictIpcToAppFrames } = require('./utils/trusted-url');
+
+// NOTE(security): Must run before any ipcMain.handle/on registration below.
+restrictIpcToAppFrames(ipcMain);
 
 if (isDev && process.env.ELECTRON_USER_DATA_PATH) {
   console.debug('`ELECTRON_USER_DATA_PATH` found, modifying `userData` path: \n'
@@ -58,6 +61,7 @@ const { registerMountIpc } = require('./ipc/mount');
 const { registerSqliteIpc } = require('./ipc/sqlite');
 const sqliteService = require('./services/sqlite');
 const { clearAllRunnerResponses } = require('./services/runner-exchange');
+const { transientManager } = require('./services/transient');
 const { registerWsdlIpc } = require('./ipc/wsdl');
 const registerUpdaterIpc = require('./ipc/updater');
 const collectionWatcher = require('./app/collection-watcher');
@@ -205,6 +209,7 @@ if (useSingleInstance && !gotTheLock) {
 // Prepare the renderer once the app is ready
 app.on('ready', async () => {
   initializeShellEnv();
+  await transientManager.clearStale();
 
   startBenchmark();
 
@@ -361,7 +366,7 @@ app.on('ready', async () => {
       title: 'About NgaRingApi',
       backgroundColor: '#0b0f17',
       webPreferences: {
-        nodeIntegration: true
+        nodeIntegration: false
       }
     });
     aboutWindow.removeMenu();
@@ -381,14 +386,7 @@ app.on('ready', async () => {
     }
     mainWindow.show();
   });
-  const devPort = process.env.BRUNO_DEV_PORT || 3000;
-  const url = isDev
-    ? `http://localhost:${devPort}`
-    : format({
-        pathname: path.join(__dirname, '../web/index.html'),
-        protocol: 'file:',
-        slashes: true
-      });
+  const url = getAppUrl();
 
   const loadAppURL = () => {
     mainWindow.loadURL(url).catch((reason) => {
@@ -445,11 +443,30 @@ app.on('ready', async () => {
     ipcMain.emit('main:start-quit-flow');
   });
 
+  // The window must only ever show the app's own document: any other target
+  // (e.g. a link in a schema description or AI reply) would inherit the preload
+  // bridge. Block it and hand http(s) URLs to the system browser.
+  const guardNavigation = (event, url) => {
+    if (isAppUrl(url)) return;
+    event.preventDefault();
+    if (/^(http:\/\/|https:\/\/)/.test(url)) {
+      shell.openExternal(url).catch((err) => console.error('Failed to open external URL:', err));
+    }
+  };
+  mainWindow.webContents.on('will-navigate', guardNavigation);
+  mainWindow.webContents.on('will-frame-navigate', guardNavigation);
   mainWindow.webContents.on('will-redirect', (event, url) => {
     event.preventDefault();
     if (/^(http:\/\/|https:\/\/)/.test(url)) {
-      require('electron').shell.openExternal(url);
+      shell.openExternal(url).catch((err) => console.error('Failed to open external URL:', err));
     }
+  });
+
+  // Guests (HTML preview, app views) must never get the preload bridge or Node.
+  mainWindow.webContents.on('will-attach-webview', (event, webPreferences) => {
+    delete webPreferences.preload;
+    webPreferences.nodeIntegration = false;
+    webPreferences.contextIsolation = true;
   });
 
   mainWindow.webContents.once('did-finish-load', () => {
@@ -475,7 +492,12 @@ app.on('ready', async () => {
           autoHideMenuBar: true,
           // No OS title bar, the chat header is the drag region and carries
           // its own close/dock controls.
-          frame: false
+          frame: false,
+          webPreferences: {
+            preload: '',
+            nodeIntegration: false,
+            contextIsolation: true
+          }
         }
       };
     }

@@ -107,7 +107,7 @@ const template = [
             title: 'About NgaRingApi',
             backgroundColor: '#0b0f17',
             webPreferences: {
-              nodeIntegration: true
+              nodeIntegration: false
             }
           });
           aboutWindow.removeMenu();

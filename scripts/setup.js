@@ -119,11 +119,27 @@ async function setup() {
       execCommand('bun run --cwd packages/bruno-requests rollup -c', 'Building bruno-requests');
       execCommand('bun run --cwd packages/bruno-schema-types tsc -p tsconfig.json', 'Building schema-types');
       execCommand('bun run --cwd packages/bruno-filestore rollup -c && bun run --cwd packages/bruno-filestore tsc --emitDeclarationOnly -p tsconfig.build.json', 'Building bruno-filestore');
+      execCommand('bun run --cwd packages/bruno-io rollup -c && bun run --cwd packages/bruno-io tsc --emitDeclarationOnly -p tsconfig.build.json', 'Building bruno-io');
       execCommand('bun run --cwd packages/bruno-sqlite scripts/generate-artifacts.ts && bun run --cwd packages/bruno-sqlite rollup -c', 'Building bruno-sqlite');
       execCommand('bun run --cwd packages/bruno-js ./src/sandbox/bundle-libraries.js', 'Bundling JS sandbox libraries');
     } else {
       execCommand('npm i --legacy-peer-deps', 'Installing dependencies');
       forceInstallPlatformDeps();
+
+      // Build packages
+      execCommand('npm run build:graphql-docs', 'Building graphql-docs');
+      execCommand('npm run build:bruno-query', 'Building bruno-query');
+      execCommand('npm run build:bruno-common', 'Building bruno-common');
+      execCommand('npm run build:bruno-converters', 'Building bruno-converters');
+      execCommand('npm run build:bruno-requests', 'Building bruno-requests');
+      execCommand('npm run build:schema-types', 'Building schema-types');
+      execCommand('npm run build:bruno-filestore', 'Building bruno-filestore');
+      execCommand('npm run build:bruno-io', 'Building bruno-io');
+      execCommand('npm run build:bruno-sqlite', 'Building bruno-sqlite');
+
+      // Bundle JS sandbox libraries
+      execCommand('npm run sandbox:bundle-libraries --workspace=packages/bruno-js', 'Bundling JS sandbox libraries');
+    }
 
       // Build packages
       execCommand('npm run build:graphql-docs', 'Building graphql-docs');

@@ -22,7 +22,7 @@ const config = {
       builtAt: new Date().toISOString()
     }
   },
-  electronVersion: '37.6.1',
+  electronVersion: '43.8.4',
   npmRebuild: false,
   directories: {
     buildResources: 'resources',
