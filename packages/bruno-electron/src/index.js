@@ -266,7 +266,7 @@ app.on('ready', async () => {
       preload: path.join(__dirname, 'preload.js'),
       webviewTag: true
     },
-    title: 'NgaRingApi',
+    title: 'Nyawit API',
     icon: path.join(__dirname, 'about/256x256.png'),
     titleBarStyle: isMac ? 'hiddenInset' : isWindows ? 'hidden' : undefined,
     frame: isLinux ? false : true,
@@ -363,7 +363,7 @@ app.on('ready', async () => {
       minWidth: 460,
       minHeight: 500,
       maximizable: false,
-      title: 'About NgaRingApi',
+      title: 'About Nyawit API',
       backgroundColor: '#0b0f17',
       webPreferences: {
         nodeIntegration: false
@@ -398,7 +398,7 @@ app.on('ready', async () => {
       } else {
         console.error(
           'If you are using an official production build: the above error is most likely a bug! '
-          + ' Please report this under: https://github.com/nyawit-dev/ngaRing-Api/issues'
+          + ' Please report this under: https://github.com/nyawit-dev/nyawit-api/issues'
         );
       }
     });

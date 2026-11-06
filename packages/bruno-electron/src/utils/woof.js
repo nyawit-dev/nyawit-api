@@ -8,16 +8,16 @@ const easterEggResponse = (request) => {
     '   /,    /`',
     '   \\\\"--\\\\',
     '',
-    '⚡ NgaRingApi executed your request at light speed.'
+    '⚡ Nyawit API executed your request at light speed.'
   ].join('\n');
   const buffer = Buffer.from(body, 'utf-8');
   return {
     status: 200,
-    statusText: 'Ring Connected!',
+    statusText: 'Connected!',
     headers: {
       'content-type': 'text/plain; charset=utf-8',
-      'x-engine': 'ngaringapi',
-      'x-fetched-by': 'ngaringapi'
+      'x-engine': 'nyawit-api',
+      'x-fetched-by': 'nyawit-api'
     },
     data: body,
     dataBuffer: buffer.toString('base64'),

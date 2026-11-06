@@ -27,14 +27,14 @@ const SUPPORT_GROUPS = [
       {
         key: 'documentation',
         icon: IconBook,
-        url: 'https://github.com/nyawit-dev/ngaRing-Api#readme',
+        url: 'https://github.com/nyawit-dev/nyawit-api#readme',
         label: 'COMMON.DOCUMENTATION',
         description: 'SUPPORT.DOCUMENTATION_DESCRIPTION'
       },
       {
         key: 'report-issues',
         icon: IconSpeakerphone,
-        url: 'https://github.com/nyawit-dev/ngaRing-Api/issues',
+        url: 'https://github.com/nyawit-dev/nyawit-api/issues',
         label: 'COMMON.REPORT_ISSUES',
         description: 'SUPPORT.REPORT_ISSUES_DESCRIPTION'
       }
@@ -47,7 +47,7 @@ const SUPPORT_GROUPS = [
       {
         key: 'github',
         icon: IconBrandGithub,
-        url: 'https://github.com/nyawit-dev/ngaRing-Api',
+        url: 'https://github.com/nyawit-dev/nyawit-api',
         label: 'COMMON.GITHUB',
         description: 'SUPPORT.GITHUB_DESCRIPTION'
       },
@@ -56,7 +56,7 @@ const SUPPORT_GROUPS = [
         icon: IconGitFork,
         url: 'https://github.com/usebruno/bruno',
         label: 'Upstream Bruno Repository',
-        description: 'Repositori open-source upstream asli yang menjadi basis fondasi NgaRingApi.'
+        description: 'Repositori open-source upstream asli yang menjadi basis fondasi Nyawit API.'
       },
       {
         key: 'discord',
@@ -83,7 +83,7 @@ const SUPPORT_GROUPS = [
   }
 ];
 
-const DEFAULT_NGARING_FEED = 'https://raw.githubusercontent.com/nyawit-dev/ngaRing-Api/main/notifications.json';
+const DEFAULT_NYAWIT_FEED = 'https://raw.githubusercontent.com/nyawit-dev/nyawit-api/main/notifications.json';
 
 const Support = () => {
   const { t } = useTranslation();
@@ -97,7 +97,7 @@ const Support = () => {
   const [notifConfig, setNotifConfig] = useState({
     enableBruno: true,
     enableCustom: true,
-    customUrl: DEFAULT_NGARING_FEED
+    customUrl: DEFAULT_NYAWIT_FEED
   });
   const [savingNotif, setSavingNotif] = useState(false);
   const [refreshingNotif, setRefreshingNotif] = useState(false);
@@ -116,7 +116,9 @@ const Support = () => {
             setNotifConfig({
               enableBruno: cfg.enableBruno !== false,
               enableCustom: cfg.enableCustom !== false,
-              customUrl: cfg.customUrl || DEFAULT_NGARING_FEED
+              customUrl: cfg.customUrl && cfg.customUrl.includes('ngaRing-Api')
+                ? DEFAULT_NYAWIT_FEED
+                : (cfg.customUrl || DEFAULT_NYAWIT_FEED)
             });
           }
         })
@@ -198,7 +200,7 @@ const Support = () => {
           <div className="flex flex-row items-center justify-between">
             <div className="flex flex-col gap-0.5">
               <span className="text-sm font-semibold text-slate-100 flex items-center gap-2">
-                NgaRingApi Desktop v{version}
+                Nyawit API Desktop v{version}
                 {updaterInfo.availableVersion && (
                   <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-400 border border-amber-500/30">
                     Update v{updaterInfo.availableVersion} Tersedia
@@ -242,7 +244,7 @@ const Support = () => {
         </h3>
         <div className="support-card p-4 flex flex-col gap-3.5">
           <p className="text-xs text-muted leading-relaxed">
-            NgaRingApi mendukung penerimaan notifikasi dari dua sumber: feed pengumuman resmi dari nyawit.dev serta feed komunitas upstream Bruno. Anda dapat mengaktifkan keduanya atau mengatur URL feed kustom Anda sendiri.
+            Nyawit API mendukung penerimaan notifikasi dari dua sumber: feed pengumuman resmi dari nyawit.dev serta feed komunitas upstream Bruno. Anda dapat mengaktifkan keduanya atau mengatur URL feed kustom Anda sendiri.
           </p>
 
           <div className="flex flex-col gap-2.5">
@@ -253,7 +255,7 @@ const Support = () => {
                 checked={notifConfig.enableCustom}
                 onChange={(e) => setNotifConfig({ ...notifConfig, enableCustom: e.target.checked })}
               />
-              <span className="text-slate-200 font-medium">Aktifkan Notifikasi NgaRingApi / Kustom</span>
+              <span className="text-slate-200 font-medium">Aktifkan Notifikasi Nyawit API / Kustom</span>
             </label>
 
             {notifConfig.enableCustom && (
@@ -310,7 +312,7 @@ const Support = () => {
       {/* 3. About & Upstream Attribution */}
       <section className="support-group mb-4" aria-labelledby="support-about-label">
         <h3 className="support-group-label select-none" id="support-about-label">
-          Tentang NgaRingApi & Atribusi Proyek Upstream
+          Tentang Nyawit API & Atribusi Proyek Upstream
         </h3>
         <div className="support-card p-4 flex flex-col gap-3">
           <div className="flex items-start gap-3">
@@ -322,7 +324,7 @@ const Support = () => {
                 Modifikasi Resmi Berbasis Repositori Open-Source Bruno
               </h4>
               <p className="text-xs text-muted leading-relaxed">
-                <strong>NgaRingApi</strong> adalah IDE dan klien pengujian API desktop lokal-pertama yang dibangun dan dimodifikasi secara ekstensif dari repositori open-source upstream{' '}
+                <strong>Nyawit API</strong> adalah IDE dan klien pengujian API desktop lokal-pertama yang dibangun dan dimodifikasi secara ekstensif dari repositori open-source upstream{' '}
                 <a
                   href="https://github.com/usebruno/bruno"
                   target="_blank"
@@ -337,7 +339,7 @@ const Support = () => {
           </div>
 
           <div className="bg-slate-900/60 p-3 rounded-lg border border-slate-800 flex flex-col gap-2 text-xs text-slate-300">
-            <div className="font-medium text-slate-200">Keunggulan & Peningkatan pada NgaRingApi:</div>
+            <div className="font-medium text-slate-200">Keunggulan & Peningkatan pada Nyawit API:</div>
             <ul className="list-disc list-inside space-y-1 text-muted text-[11.5px] pl-1">
               <li><strong className="text-slate-300">Smart Auto-Updater</strong>: Pembaruan versi terpadu satu titik di pojok kanan bawah dengan metrik waktu nyata dan instalasi mulus.</li>
               <li><strong className="text-slate-300">Multi-Channel Feed Engine</strong>: Pengumuman mandiri nyawit.dev yang berjalan berdampingan dengan feed komunitas Bruno.</li>
@@ -348,13 +350,13 @@ const Support = () => {
 
           <div className="flex items-center gap-2 pt-1">
             <a
-              href="https://github.com/nyawit-dev/ngaRing-Api"
+              href="https://github.com/nyawit-dev/nyawit-api"
               target="_blank"
               rel="noreferrer"
               className="btn btn-sm btn-secondary flex items-center gap-1.5 text-xs text-cyan-400"
             >
               <IconBrandGithub size={13} />
-              <span>Repositori NgaRingApi</span>
+              <span>Repositori Nyawit API</span>
             </a>
 
             <a

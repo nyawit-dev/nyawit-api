@@ -54,7 +54,7 @@ export default defineConfig({
     }
   },
   html: {
-    title: 'NgaRingApi'
+    title: 'Nyawit API'
   },
   tools: {
     rspack: {

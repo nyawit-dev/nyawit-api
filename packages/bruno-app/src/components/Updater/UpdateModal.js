@@ -116,7 +116,7 @@ const UpdateModal = ({
     if (ipcRenderer) {
       ipcRenderer.invoke('updater:open-download-page', url);
     } else {
-      window.open(typeof targetUrl === 'string' ? targetUrl : `https://github.com/nyawit-dev/ngaRing-Api/releases/tag/v${version || ''}`, '_blank');
+      window.open(typeof targetUrl === 'string' ? targetUrl : `https://github.com/nyawit-dev/nyawit-api/releases/tag/v${version || ''}`, '_blank');
     }
   };
 
@@ -221,7 +221,7 @@ const UpdateModal = ({
                 <IconBolt size={18} />
               </div>
             )}
-            <span className="font-semibold text-sm">NgaRingApi v{version || 'Terbaru'}</span>
+            <span className="font-semibold text-sm">Nyawit API v{version || 'Terbaru'}</span>
           </div>
 
           <button
@@ -285,7 +285,7 @@ const UpdateModal = ({
               {isError
                 ? `Terjadi kendala saat memeriksa atau mengunduh pembaruan: ${getErrorMessage()}`
                 : isDownload
-                ? 'Versi terbaru NgaRingApi telah tersedia dengan peningkatan performa, perbaikan bug, dan fitur terkini. Apakah Anda ingin mengunduh pembaruan ini sekarang?'
+                ? 'Versi terbaru Nyawit API telah tersedia dengan peningkatan performa, perbaikan bug, dan fitur terkini. Apakah Anda ingin mengunduh pembaruan ini sekarang?'
                 : 'Pembaruan versi terbaru telah selesai diunduh 100%. Aplikasi akan menutup sejenak dan membuka kembali dengan versi terbaru.'}
             </p>
 

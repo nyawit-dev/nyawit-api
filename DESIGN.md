@@ -1,4 +1,4 @@
-# Design Direction: NgaRingApi
+# Design Direction: Nyawit API
 
 > **Reading this as:** Local-first API IDE & testing environment for developers, in a precision dark-technical aesthetic with cyber-cyan & obsidian palette, dial ENERGY 2 / RHYTHM 1 / MOTION 1.
 
@@ -6,10 +6,10 @@
 
 ## 1. Brand Identity & Character
 
-- **Product Name:** NgaRingApi
+- **Product Name:** Nyawit API
 - **Tagline:** Local-first, git-friendly API IDE and client for modern developers.
 - **Personality:** Precision-engineered, swift, focused, distraction-free, privacy-first.
-- **Core Visual Metaphor:** The "NgaRing" — a continuous orbital ring representing the API request-response loop, local packet velocity, and unbroken connection, centered around a sharp geometric monogram.
+- **Core Visual Metaphor:** The "Nyawit" — a continuous orbital ring representing the API request-response loop, local packet velocity, and unbroken connection, centered around a sharp geometric monogram.
 
 ---
 

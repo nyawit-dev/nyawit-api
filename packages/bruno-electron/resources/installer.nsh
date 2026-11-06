@@ -7,7 +7,7 @@ ManifestDPIAware true
 !macroend
 
 !macro customWelcomePage
-  !define MUI_WELCOMEPAGE_TITLE "NgaRingApi"
+  !define MUI_WELCOMEPAGE_TITLE "Nyawit API"
   !define MUI_WELCOMEPAGE_TEXT "Local-first, git-friendly API IDE and client for modern developers."
   !insertmacro MUI_PAGE_WELCOME
 !macroend
@@ -16,6 +16,6 @@ ManifestDPIAware true
   WriteRegStr SHELL_CONTEXT "${UNINSTALL_REGISTRY_KEY}" "Publisher" "nyawit.dev"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\a632ffe9-7d5d-5b3b-a2a3-bbea12298a2a" "Publisher" "nyawit.dev"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\a632ffe9-7d5d-5b3b-a2a3-bbea12298a2a" "Publisher" "nyawit.dev"
-  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\com.ngaringapi.app" "Publisher" "nyawit.dev"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\com.ngaringapi.app" "Publisher" "nyawit.dev"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\com.nyawitapi.app" "Publisher" "nyawit.dev"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\com.nyawitapi.app" "Publisher" "nyawit.dev"
 !macroend

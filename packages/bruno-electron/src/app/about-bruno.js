@@ -1,4 +1,4 @@
-module.exports = function aboutNgaRingApi({ version }) {
+module.exports = function aboutNyawitApi({ version }) {
   const currentYear = new Date().getFullYear();
   return `
     <!DOCTYPE html>
@@ -6,7 +6,7 @@ module.exports = function aboutNgaRingApi({ version }) {
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>About NgaRingApi</title>
+        <title>About Nyawit API</title>
         <style>
             :root {
                 --bg: #0b0f17;
@@ -166,7 +166,7 @@ module.exports = function aboutNgaRingApi({ version }) {
     <body>
         <div class="header-wrap">
             <div class="logo-wrap">
-                <svg id="ngaring-logo" width="68" height="68" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg id="nyawit-logo" width="68" height="68" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="about-cat-cyan" x1="6" y1="6" x2="66" y2="66" gradientUnits="userSpaceOnUse">
                             <stop offset="0%" stop-color="#00F0FF" />
@@ -191,7 +191,7 @@ module.exports = function aboutNgaRingApi({ version }) {
                     <line x1="44" y1="46" x2="53" y2="46" stroke="#06B6D4" stroke-width="2" stroke-linecap="round" />
                 </svg>
             </div>
-            <h1 class="app-title">NgaRingApi</h1>
+            <h1 class="app-title">Nyawit API</h1>
             <div class="version-pill">Versi ${version}</div>
             <p class="tagline">Local-First, Git-Friendly API IDE & Development Client</p>
         </div>
@@ -202,7 +202,7 @@ module.exports = function aboutNgaRingApi({ version }) {
                 <span>Asal-Usul & Atribusi Proyek Upstream</span>
             </div>
             <p class="desc-text">
-                <strong>NgaRingApi</strong> adalah aplikasi pengujian dan pengembangan API desktop yang dibangun dan dimodifikasi secara ekstensif berbasis repositori open-source upstream 
+                <strong>Nyawit API</strong> adalah aplikasi pengujian dan pengembangan API desktop yang dibangun dan dimodifikasi secara ekstensif berbasis repositori open-source upstream 
                 <a href="https://github.com/usebruno/bruno" target="_blank" rel="noopener">Bruno (usebruno/bruno)</a>, yang diciptakan oleh Anoop M D dan para kontributor komunitas global.
             </p>
             <p class="desc-text">
@@ -213,7 +213,7 @@ module.exports = function aboutNgaRingApi({ version }) {
         <div class="content-card">
             <div class="card-title">
                 <span>🚀</span>
-                <span>Peningkatan & Fitur Khusus NgaRingApi</span>
+                <span>Peningkatan & Fitur Khusus Nyawit API</span>
             </div>
             <ul class="feature-list">
                 <li class="feature-item">
@@ -241,15 +241,15 @@ module.exports = function aboutNgaRingApi({ version }) {
                 <span>Tautan & Repositori Resmi</span>
             </div>
             <div class="links-group">
-                <a class="link-btn primary" href="https://github.com/nyawit-dev/ngaRing-Api" target="_blank" rel="noopener">
+                <a class="link-btn primary" href="https://github.com/nyawit-dev/nyawit-api" target="_blank" rel="noopener">
                     <span>🐙</span>
-                    <span>GitHub NgaRingApi</span>
+                    <span>GitHub Nyawit API</span>
                 </a>
                 <a class="link-btn" href="https://github.com/usebruno/bruno" target="_blank" rel="noopener">
                     <span>📦</span>
                     <span>Upstream Bruno Repo</span>
                 </a>
-                <a class="link-btn" href="https://github.com/nyawit-dev/ngaRing-Api/issues" target="_blank" rel="noopener">
+                <a class="link-btn" href="https://github.com/nyawit-dev/nyawit-api/issues" target="_blank" rel="noopener">
                     <span>🐛</span>
                     <span>Laporkan Issue</span>
                 </a>

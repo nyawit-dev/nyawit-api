@@ -54,7 +54,7 @@ const UpdateNotification = () => {
         }
       } else if (state.status === 'not-available') {
         if (isManualCheckRef.current) {
-          toast.success(`NgaRingApi v${state.availableVersion || state.currentVersion} sudah versi terbaru.`, {
+          toast.success(`Nyawit API v${state.availableVersion || state.currentVersion} sudah versi terbaru.`, {
             id: 'manual-update-toast',
             duration: 4000
           });

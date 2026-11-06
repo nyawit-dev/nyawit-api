@@ -77,7 +77,7 @@ export const notificationSlice = createSlice({
       // Ignore notifications sent before the app was installed
       let appInstalledOnDate = getAppInstallDate();
       notifications = notifications.filter((notification) => {
-        if (notification.ignoreInstallDate || notification.pinned || notification.source === 'NgaRingApi') {
+        if (notification.ignoreInstallDate || notification.pinned || notification.source === 'Nyawit API' || notification.source === 'NgaRingApi') {
           return true;
         }
         const notificationDate = new Date(notification.date);

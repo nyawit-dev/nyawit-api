@@ -1090,7 +1090,7 @@ const StyledWrapper = styled.div`
     background-color: ${(props) => props.theme.background.base};
   }
 
-  /* Empty Diff State with NgaRing Mascot & Shortcuts */
+  /* Empty Diff State with Nyawit Mascot & Shortcuts */
   .git-diff-empty {
     display: flex;
     flex-direction: column;

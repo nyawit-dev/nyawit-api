@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/images/logo.png" width="96" alt="NgaRingApi Logo" />
+  <img src="assets/images/logo.png" width="96" alt="Nyawit API Logo" />
 </p>
 
-<h1 align="center">NgaRingApi</h1>
+<h1 align="center">Nyawit API</h1>
 
 <p align="center">
   <strong>Fast, Local-First API IDE and Testing Environment</strong><br>
@@ -20,13 +20,13 @@
 
 ## Overview
 
-**NgaRingApi** is a modern, developer-centric API client and IDE designed to replace bloated cloud-based tools. 
+**Nyawit API** is a modern, developer-centric API client and IDE designed to replace bloated cloud-based tools. 
 
-Instead of storing your sensitive API requests, credentials, and test suites in a remote vendor database, NgaRingApi saves your collections directly on your local filesystem using plain-text files.
+Instead of storing your sensitive API requests, credentials, and test suites in a remote vendor database, Nyawit API saves your collections directly on your local filesystem using plain-text files.
 
-### Why NgaRingApi?
+### Why Nyawit API?
 
-- **Local-First Architecture:** Your collections, environment variables, and request data reside on your disk. NgaRingApi functions completely offline.
+- **Local-First Architecture:** Your collections, environment variables, and request data reside on your disk. Nyawit API functions completely offline.
 - **Native Git Collaboration:** Every request is a readable file. Commit, create pull requests, review diffs, and resolve merge conflicts using your existing Git workflow.
 - **Fast & Snappy:** Built with Rsbuild and modern React for instant startup and rapid response rendering.
 - **Zero Cloud Lock-in:** No forced account creation, no tracking telemetry of your payloads, and no subscription walls for core features.
@@ -58,8 +58,8 @@ Instead of storing your sensitive API requests, credentials, and test suites in 
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/nyawit-dev/ngaRing-Api.git
-   cd ngaRing-Api
+   git clone https://github.com/nyawit-dev/nyawit-api.git
+   cd nyawit-api
    ```
 
 2. **Install dependencies:**
@@ -81,7 +81,7 @@ Instead of storing your sensitive API requests, credentials, and test suites in 
 
 ## Building Desktop Packages
 
-NgaRingApi can be compiled into standalone native packages for Windows, macOS, and Linux:
+Nyawit API can be compiled into standalone native packages for Windows, macOS, and Linux:
 
 ```bash
 # Production Web Build
@@ -120,6 +120,6 @@ Packaged installers will be generated inside the `packages/bruno-electron/out` d
 
 ## License & Attribution
 
-**NgaRingApi** is distributed under the [MIT License](license.md).
+**Nyawit API** is distributed under the [MIT License](license.md).
 
 This project is built upon the open-source foundation of Bruno, created by Anoop M D and contributors under the MIT License. We gratefully acknowledge the original authors and the open-source community for pioneering local-first API tooling.

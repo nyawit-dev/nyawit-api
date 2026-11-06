@@ -98,11 +98,11 @@ const StatusBar = () => {
               </div>
             </ToolHint>
 
-            <ToolHint text="GitHub Repository (nyawit-dev/ngaRing-Api)" toolhintId="GitHub" place="top" offset={10}>
+            <ToolHint text="GitHub Repository (nyawit-dev/nyawit-api)" toolhintId="GitHub" place="top" offset={10}>
               <button
                 className="status-bar-button"
                 onClick={() => {
-                  window?.ipcRenderer?.openExternal('https://github.com/nyawit-dev/ngaRing-Api');
+                  window?.ipcRenderer?.openExternal('https://github.com/nyawit-dev/nyawit-api');
                 }}
                 tabIndex={0}
                 aria-label="Open GitHub Repository"

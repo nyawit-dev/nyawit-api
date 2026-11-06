@@ -48,7 +48,7 @@ jobs:
       - name: Upload Web Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ngaringapi-web-dist
+          name: nyawitapi-web-dist
           path: packages/bruno-app/dist
           retention-days: 7
 
@@ -61,13 +61,13 @@ jobs:
         include:
           - os: windows-latest
             platform: win
-            artifact_name: NgaRingApi-Windows-Installer
+            artifact_name: NyawitApi-Windows-Installer
           - os: macos-14
             platform: mac
-            artifact_name: NgaRingApi-macOS-Installer
+            artifact_name: NyawitApi-macOS-Installer
           - os: ubuntu-latest
             platform: linux
-            artifact_name: NgaRingApi-Linux-Packages
+            artifact_name: NyawitApi-Linux-Packages
       fail-fast: false
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.platform == 'mac' }}
@@ -93,7 +93,7 @@ jobs:
       - name: Download Web Build Artifact
         uses: actions/download-artifact@v4
         with:
-          name: ngaringapi-web-dist
+          name: nyawitapi-web-dist
           path: packages/bruno-app/dist
 
       - name: Verify or Build Web Assets
@@ -110,6 +110,8 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           sudo mdutil -a -i off || true
+          hdiutil detach /Volumes/NyawitApi* -force 2>/dev/null || true
+          rm -rf /Volumes/NyawitApi* 2>/dev/null || true
           hdiutil detach /Volumes/NgaRingApi* -force 2>/dev/null || true
           rm -rf /Volumes/NgaRingApi* 2>/dev/null || true
 
@@ -156,9 +158,13 @@ jobs:
         run: |
           mkdir -p release-assets
           find release-downloads/ -type f \( -name "*.exe" -o -name "*.dmg" -o -name "*.zip" -o -name "*.AppImage" -o -name "*.deb" -o -name "latest*.yml" -o -name "*.blockmap" \) -exec cp {} release-assets/ \;
-          if [ -d "release-downloads/ngaringapi-web-dist" ]; then
+          if [ -d "release-downloads/nyawitapi-web-dist" ]; then
+            cd release-downloads/nyawitapi-web-dist
+            zip -r ../../release-assets/NyawitApi-Web.zip .
+            cd ../..
+          elif [ -d "release-downloads/ngaringapi-web-dist" ]; then
             cd release-downloads/ngaringapi-web-dist
-            zip -r ../../release-assets/NgaRingApi-Web.zip .
+            zip -r ../../release-assets/NyawitApi-Web.zip .
             cd ../..
           fi
           ls -la release-assets/
@@ -170,11 +176,11 @@ jobs:
           echo "version=${APP_VERSION}" >> $GITHUB_OUTPUT
           if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
             echo "tag=${{ github.ref_name }}" >> $GITHUB_OUTPUT
-            echo "title=NgaRingApi ${{ github.ref_name }}" >> $GITHUB_OUTPUT
+            echo "title=Nyawit API ${{ github.ref_name }}" >> $GITHUB_OUTPUT
             echo "prerelease=false" >> $GITHUB_OUTPUT
           else
             echo "tag=v${APP_VERSION}" >> $GITHUB_OUTPUT
-            echo "title=NgaRingApi v${APP_VERSION}" >> $GITHUB_OUTPUT
+            echo "title=Nyawit API v${APP_VERSION}" >> $GITHUB_OUTPUT
             echo "prerelease=false" >> $GITHUB_OUTPUT
           fi
 
@@ -186,7 +192,7 @@ jobs:
           target_commitish: ${{ github.sha }}
           generate_release_notes: true
           body: |
-            ### NgaRingApi ${{ steps.release_info.outputs.title }}
+            ### Nyawit API ${{ steps.release_info.outputs.title }}
 
             Local-first, git-friendly API IDE and client for modern developers.
 
@@ -199,10 +205,10 @@ jobs:
             - **Bug Fixes**: Fixed network request timeline reassignment and safe token encryption handling in Electron main process.
 
             #### Download Assets:
-            - **Windows**: `NgaRingApi_${{ steps.release_info.outputs.version }}_x64_win.exe` (NSIS Installer)
-            - **macOS**: `NgaRingApi_${{ steps.release_info.outputs.version }}_x64_mac.dmg`, `NgaRingApi_${{ steps.release_info.outputs.version }}_arm64_mac.dmg` & `.zip`
-            - **Linux**: `NgaRingApi_${{ steps.release_info.outputs.version }}_x64_linux.AppImage` & `.deb`
-            - **Web App**: `NgaRingApi-Web.zip`
+            - **Windows**: `NyawitApi_${{ steps.release_info.outputs.version }}_x64_win.exe` (NSIS Installer)
+            - **macOS**: `NyawitApi_${{ steps.release_info.outputs.version }}_x64_mac.dmg`, `NyawitApi_${{ steps.release_info.outputs.version }}_arm64_mac.dmg` & `.zip`
+            - **Linux**: `NyawitApi_${{ steps.release_info.outputs.version }}_x64_linux.AppImage` & `.deb`
+            - **Web App**: `NyawitApi-Web.zip`
           files: release-assets/*
           prerelease: ${{ steps.release_info.outputs.prerelease == 'true' }}
           make_latest: true

@@ -107,7 +107,7 @@ const WelcomeModal = ({ onDismiss, onImportCollection, onCreateCollection, onOpe
             <Bruno width={48} />
           </div>
           <h1 className="welcome-heading">
-            {step === 1 ? 'Welcome to NgaRingApi' : step === 4 ? 'Ready to go!' : 'Set up NgaRingApi'}
+            {step === 1 ? 'Welcome to Nyawit API' : step === 4 ? 'Ready to go!' : 'Set up Nyawit API'}
           </h1>
           {step === 1 && (
             <p className="welcome-tagline">

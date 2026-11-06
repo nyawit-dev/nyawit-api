@@ -36,7 +36,7 @@ const NotificationDetail = ({ notification }) => {
         <div className="notif-detail-meta">
           {notification.source && (
             <span className="notif-source-badge text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
-              {notification.source === 'NgaRingApi' ? '🌐 NgaRingApi' : '📦 Bruno'}
+              {notification.source === 'Nyawit API' || notification.source === 'NgaRingApi' ? '🌐 Nyawit API' : '📦 Bruno'}
             </span>
           )}
           {notification.type && (

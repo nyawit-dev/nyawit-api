@@ -3,7 +3,7 @@ const { ipcMain } = require('electron');
 const fetch = require('node-fetch');
 const { getPreferences, savePreferences } = require('../store/preferences');
 
-const DEFAULT_NGARING_FEED = 'https://raw.githubusercontent.com/nyawit-dev/ngaRing-Api/main/notifications.json';
+const DEFAULT_NYAWIT_FEED = 'https://raw.githubusercontent.com/nyawit-dev/nyawit-api/main/notifications.json';
 const BRUNO_FEED = process.env.BRUNO_INFO_ENDPOINT || 'https://appinfo.usebruno.com';
 
 const fetchWithTimeout = async (url, timeoutMs = 5000) => {
@@ -28,14 +28,16 @@ const getNotificationConfig = () => {
     return {
       enableBruno: notifPrefs.enableBruno !== false,
       enableCustom: notifPrefs.enableCustom !== false,
-      customUrl: notifPrefs.customUrl || DEFAULT_NGARING_FEED
+      customUrl: notifPrefs.customUrl && notifPrefs.customUrl.includes('ngaRing-Api')
+        ? DEFAULT_NYAWIT_FEED
+        : (notifPrefs.customUrl || DEFAULT_NYAWIT_FEED)
     };
   } catch (err) {
     console.error('[Notifications] Failed to read preferences:', err);
     return {
       enableBruno: true,
       enableCustom: true,
-      customUrl: DEFAULT_NGARING_FEED
+      customUrl: DEFAULT_NYAWIT_FEED
     };
   }
 };
@@ -59,7 +61,7 @@ const fetchAllNotifications = async () => {
   const config = getNotificationConfig();
   const promises = [];
 
-  // 1. NgaRingApi / Custom Feed
+  // 1. Nyawit API / Custom Feed
   if (config.enableCustom && config.customUrl) {
     promises.push(
       fetchWithTimeout(config.customUrl, 5000)
@@ -67,8 +69,8 @@ const fetchAllNotifications = async () => {
           const list = data?.notifications || (Array.isArray(data) ? data : []);
           return list.map((item) => ({
             ...item,
-            source: item.source || 'NgaRingApi',
-            type: item.type || 'NgaRingApi',
+            source: item.source || 'Nyawit API',
+            type: item.type || 'Nyawit API',
             color: item.color || '#00f0ff',
             ignoreInstallDate: item.ignoreInstallDate !== false
           }));

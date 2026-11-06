@@ -1,9 +1,9 @@
 import React from 'react';
 
-const NgaRingLogo = ({ width = 72, className = '' }) => {
+const NyawitLogo = ({ width = 72, className = '' }) => {
   return (
     <svg
-      id="ngaring-logo"
+      id="nyawit-logo"
       width={width}
       height={width}
       viewBox="0 0 72 72"
@@ -26,7 +26,7 @@ const NgaRingLogo = ({ width = 72, className = '' }) => {
       {/* Dark Obsidian Squircle Base */}
       <rect x="5" y="5" width="62" height="62" rx="17" fill="#0B0F17" stroke="#1E293B" strokeWidth="1.5" />
 
-      {/* The NgaRing Orbital Loop (Request-Response Orbit) */}
+      {/* The Nyawit Orbital Loop (Request-Response Orbit) */}
       <circle
         cx="36"
         cy="37"
@@ -81,4 +81,4 @@ const NgaRingLogo = ({ width = 72, className = '' }) => {
   );
 };
 
-export default NgaRingLogo;
+export default NyawitLogo;

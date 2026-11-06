@@ -95,7 +95,7 @@ const template = [
     role: 'help',
     submenu: [
       {
-        label: 'About NgaRingApi',
+        label: 'About Nyawit API',
         click: () => {
           const aboutWindow = new BrowserWindow({
             width: 540,
@@ -104,7 +104,7 @@ const template = [
             minWidth: 460,
             minHeight: 500,
             maximizable: false,
-            title: 'About NgaRingApi',
+            title: 'About Nyawit API',
             backgroundColor: '#0b0f17',
             webPreferences: {
               nodeIntegration: false

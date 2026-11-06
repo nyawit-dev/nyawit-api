@@ -4,7 +4,7 @@ const path = require('path');
 const rootDir = path.resolve(__dirname, '..');
 
 function guardBranding() {
-  console.log('--- NgaRingApi Branding Guard ---');
+  console.log('--- Nyawit API Branding Guard ---');
 
   // 1. Guard packages/bruno-electron/package.json
   const electronPkgPath = path.join(rootDir, 'packages', 'bruno-electron', 'package.json');
@@ -16,12 +16,12 @@ function guardBranding() {
       pkg.author = {
         name: 'nyawit.dev',
         email: 'ringga.itdev@batamfast.com',
-        url: 'https://github.com/nyawit-dev/ngaRing-Api'
+        url: 'https://github.com/nyawit-dev/nyawit-api'
       };
-      pkg.homepage = 'https://github.com/nyawit-dev/ngaRing-Api';
+      pkg.homepage = 'https://github.com/nyawit-dev/nyawit-api';
       pkg.repository = {
         type: 'git',
-        url: 'https://github.com/nyawit-dev/ngaRing-Api.git'
+        url: 'https://github.com/nyawit-dev/nyawit-api.git'
       };
       if (pkg.scripts) {
         for (const key of ['dist:mac', 'dist:win', 'dist:linux', 'dist:deb', 'dist:rpm', 'dist:snap']) {
@@ -42,14 +42,17 @@ function guardBranding() {
   if (fs.existsSync(builderConfigPath)) {
     try {
       let code = fs.readFileSync(builderConfigPath, 'utf8');
-      if (!code.includes("productName: isBenchmark ? 'NgaRingApi Benchmark' : 'NgaRingApi'")) {
-        code = code.replace(/productName:\s*isBenchmark\s*\?[^,]*,/, "productName: isBenchmark ? 'NgaRingApi Benchmark' : 'NgaRingApi',");
+      if (!code.includes("productName: isBenchmark ? 'Nyawit API Benchmark' : 'Nyawit API'")) {
+        code = code.replace(/productName:\s*isBenchmark\s*\?[^,]*,/, "productName: isBenchmark ? 'Nyawit API Benchmark' : 'Nyawit API',");
       }
-      if (!code.includes("appId: 'com.ngaringapi.app'")) {
-        code = code.replace(/appId:\s*['"][^'"]*['"],/, "appId: 'com.ngaringapi.app',");
+      if (!code.includes("appId: 'com.nyawitapi.app'")) {
+        code = code.replace(/appId:\s*['"][^'"]*['"],/, "appId: 'com.nyawitapi.app',");
       }
-      if (!code.includes("executableName: 'NgaRingApi'")) {
-        code = code.replace(/executableName:\s*['"][^'"]*['"],/, "executableName: 'NgaRingApi',");
+      if (!code.includes("executableName: 'NyawitApi'")) {
+        code = code.replace(/executableName:\s*['"][^'"]*['"],/, "executableName: 'NyawitApi',");
+      }
+      if (!code.includes("repo: 'nyawit-api'")) {
+        code = code.replace(/repo:\s*['"][^'"]*['"]/, "repo: 'nyawit-api'");
       }
       if (!code.includes("copyright: 'Copyright © 2026 nyawit.dev'")) {
         code = code.replace(/const config = {/, "const config = {\n  copyright: 'Copyright © 2026 nyawit.dev',");
@@ -73,9 +76,9 @@ function guardBranding() {
       pkg.author = {
         name: 'nyawit.dev',
         email: 'ringga.itdev@batamfast.com',
-        url: 'https://github.com/nyawit-dev/ngaRing-Api'
+        url: 'https://github.com/nyawit-dev/nyawit-api'
       };
-      pkg.homepage = 'https://github.com/nyawit-dev/ngaRing-Api';
+      pkg.homepage = 'https://github.com/nyawit-dev/nyawit-api';
       fs.writeFileSync(rootPkgPath, JSON.stringify(pkg, null, 2) + '\n');
       console.log('✓ Guarded root package.json');
     } catch (err) {
@@ -89,6 +92,8 @@ function guardBranding() {
     try {
       let nsh = fs.readFileSync(installerNshPath, 'utf8');
       nsh = nsh.replace(/"Publisher"\s+"[^"]*"/g, '"Publisher" "nyawit.dev"');
+      nsh = nsh.replace(/!define MUI_WELCOMEPAGE_TITLE\s+"[^"]*"/g, '!define MUI_WELCOMEPAGE_TITLE "Nyawit API"');
+      nsh = nsh.replace(/com\.ngaringapi\.app/g, 'com.nyawitapi.app');
       fs.writeFileSync(installerNshPath, nsh);
       console.log('✓ Guarded packages/bruno-electron/resources/installer.nsh');
     } catch (err) {

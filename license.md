@@ -1,6 +1,6 @@
-# NgaRingApi License
+# Nyawit API License
 
-NgaRingApi is a derivative work and fork of Bruno.
+Nyawit API is a derivative work and fork of Bruno.
 
 ## Original Work (Bruno)
 MIT License
@@ -27,6 +27,6 @@ SOFTWARE.
 
 ---
 
-## Modifications and Rebranding (NgaRingApi)
+## Modifications and Rebranding (Nyawit API)
 Copyright (c) 2026 nyawit.dev
 Licensed under the MIT License.

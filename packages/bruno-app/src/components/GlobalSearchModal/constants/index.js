@@ -26,9 +26,9 @@ export const SEARCH_CONFIG = {
 
 export const DOCUMENTATION_RESULT = {
   type: SEARCH_TYPES.DOCUMENTATION,
-  item: { id: 'docs', name: 'NgaRingApi Documentation' },
-  name: 'NgaRingApi Documentation',
+  item: { id: 'docs', name: 'Nyawit API Documentation' },
+  name: 'Nyawit API Documentation',
   path: '/',
-  description: 'Browse the official NgaRingApi documentation and guides',
+  description: 'Browse the official Nyawit API documentation and guides',
   matchType: MATCH_TYPES.DOCUMENTATION
 };

@@ -122,7 +122,7 @@ const AppMenu = () => {
       submenu: [
         {
           id: 'about',
-          label: 'About NgaRingApi',
+          label: 'About Nyawit API',
           onClick: () => ipcRenderer?.invoke('renderer:open-about')
         },
         {

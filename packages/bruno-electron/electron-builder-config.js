@@ -3,19 +3,19 @@ require('dotenv').config({ path: process.env.DOTENV_PATH });
 const isBenchmark = process.env.BRUNO_BENCHMARK === 'true';
 
 const config = {
-  appId: 'com.ngaringapi.app',
-  productName: isBenchmark ? 'NgaRingApi Benchmark' : 'NgaRingApi',
+  appId: 'com.nyawitapi.app',
+  productName: isBenchmark ? 'Nyawit API Benchmark' : 'Nyawit API',
   copyright: 'Copyright © 2026 nyawit.dev',
   publish: {
     provider: 'github',
     owner: 'nyawit-dev',
-    repo: 'ngaRing-Api'
+    repo: 'nyawit-api'
   },
   extraMetadata: {
     author: {
       name: 'nyawit.dev',
       email: 'ringga.itdev@batamfast.com',
-      url: 'https://github.com/nyawit-dev/ngaRing-Api'
+      url: 'https://github.com/nyawit-dev/nyawit-api'
     },
     brunoBuild: {
       benchmark: isBenchmark,
@@ -36,9 +36,9 @@ const config = {
   ],
   files: ['**/*'],
   afterSign: 'notarize.js',
-  executableName: 'NgaRingApi',
+  executableName: 'NyawitApi',
   mac: {
-    artifactName: 'NgaRingApi_${version}_${arch}_${os}.${ext}',
+    artifactName: 'NyawitApi_${version}_${arch}_${os}.${ext}',
     category: 'public.app-category.developer-tools',
     target: [
       {
@@ -57,9 +57,9 @@ const config = {
     requirements: 'resources/app-requirements.txt',
     protocols: [
       {
-        name: 'NgaRingApi',
+        name: 'Nyawit API',
         schemes: [
-          'ngaringapi'
+          'nyawitapi'
         ]
       }
     ]
@@ -71,7 +71,7 @@ const config = {
     writeUpdateInfo: false
   },
   linux: {
-    artifactName: 'NgaRingApi_${version}_${arch}_${os}.${ext}',
+    artifactName: 'NyawitApi_${version}_${arch}_${os}.${ext}',
     icon: 'resources/icons/png',
     vendor: 'nyawit.dev',
     maintainer: 'nyawit.dev <ringga.itdev@batamfast.com>',
@@ -87,17 +87,17 @@ const config = {
     ],
     protocols: [
       {
-        name: 'NgaRingApi',
-        schemes: ['ngaringapi']
+        name: 'Nyawit API',
+        schemes: ['nyawitapi']
       }
     ],
     category: 'Development',
     synopsis: 'Local-first API IDE and client',
     description: 'Local-first, git-friendly API IDE and client for modern developers.',
     desktop: {
-      Name: 'NgaRingApi',
+      Name: 'Nyawit API',
       Comment: 'Local-first, git-friendly API IDE and client for modern developers.',
-      MimeType: 'x-scheme-handler/ngaringapi;'
+      MimeType: 'x-scheme-handler/nyawitapi;'
     }
   },
   deb: {
@@ -125,7 +125,7 @@ const config = {
     }
   },
   win: {
-    artifactName: 'NgaRingApi_${version}_${arch}_win.${ext}',
+    artifactName: 'NyawitApi_${version}_${arch}_win.${ext}',
     icon: 'resources/icons/win/icon.ico',
     target: [
       {
@@ -145,10 +145,10 @@ const config = {
     createDesktopShortcut: true,
     createStartMenuShortcut: true,
     runAfterFinish: true,
-    shortcutName: 'NgaRingApi',
+    shortcutName: 'Nyawit API',
     installerIcon: 'resources/icons/win/icon.ico',
     uninstallerIcon: 'resources/icons/win/icon.ico',
-    uninstallDisplayName: 'NgaRingApi ${version}'
+    uninstallDisplayName: 'Nyawit API ${version}'
   }
 };
 

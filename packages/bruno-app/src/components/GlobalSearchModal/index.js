@@ -206,14 +206,14 @@ const GlobalSearchModal = ({ isOpen, onClose, onOpenNewRequest }) => {
       },
       {
         id: 'cmd-docs',
-        name: 'NgaRingApi Documentation',
+        name: 'Nyawit API Documentation',
         description: 'Explore the complete documentation, guides, and API specs',
         type: SEARCH_TYPES.COMMAND,
         matchType: MATCH_TYPES.COMMAND,
         shortcut: 'Docs',
         icon: IconBook,
         action: () => {
-          window.open('https://github.com/nyawit-dev/ngaRing-Api#readme', '_blank');
+          window.open('https://github.com/nyawit-dev/nyawit-api#readme', '_blank');
         }
       }
     ];
@@ -285,7 +285,7 @@ const GlobalSearchModal = ({ isOpen, onClose, onOpenNewRequest }) => {
     // Documentation check
     if (activeCategory === 'all') {
       const queryLower = searchTerms.join(' ');
-      if (['documentation', 'docs', 'ngaring', 'guide'].some((term) => term.includes(queryLower) || queryLower.includes(term))) {
+      if (['documentation', 'docs', 'nyawit', 'guide'].some((term) => term.includes(queryLower) || queryLower.includes(term))) {
         results.push(DOCUMENTATION_RESULT);
       }
     }
@@ -477,7 +477,7 @@ const GlobalSearchModal = ({ isOpen, onClose, onOpenNewRequest }) => {
     }
 
     if (result.type === SEARCH_TYPES.DOCUMENTATION) {
-      window.open('https://github.com/nyawit-dev/ngaRing-Api#readme', '_blank');
+      window.open('https://github.com/nyawit-dev/nyawit-api#readme', '_blank');
       onClose();
       return;
     }
@@ -600,7 +600,7 @@ const GlobalSearchModal = ({ isOpen, onClose, onOpenNewRequest }) => {
         aria-describedby="search-modal-description"
       >
         <div className="command-k-modal" onClick={(e) => e.stopPropagation()}>
-          <h1 id="search-modal-title" className="sr-only">NgaRingApi Command Palette</h1>
+          <h1 id="search-modal-title" className="sr-only">Nyawit API Command Palette</h1>
           <p id="search-modal-description" className="sr-only">
             Search commands, requests, collections, or documentation. Use arrow keys to navigate and Enter to execute.
           </p>

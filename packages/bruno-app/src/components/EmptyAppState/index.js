@@ -3,7 +3,7 @@ import { IconAppWindow } from '@tabler/icons';
 import Button from 'ui/Button';
 import StyledWrapper from './StyledWrapper';
 
-const APPS_DOCS_URL = 'https://github.com/nyawit-dev/ngaRing-Api#readme';
+const APPS_DOCS_URL = 'https://github.com/nyawit-dev/nyawit-api#readme';
 
 const EmptyAppState = ({ title = 'No app yet', hint, onAddCode }) => {
   const openAppsDocs = useCallback(() => {

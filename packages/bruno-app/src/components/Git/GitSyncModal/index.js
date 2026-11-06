@@ -67,7 +67,7 @@ import {
 import VisualDiffViewer from '../VisualDiffViewer';
 import StyledWrapper from './StyledWrapper';
 
-const GITHUB_TOKEN_CREATE_URL = 'https://github.com/settings/tokens/new?scopes=repo&description=NgaRingApi%20Git%20Client';
+const GITHUB_TOKEN_CREATE_URL = 'https://github.com/settings/tokens/new?scopes=repo&description=Nyawit%20API%20Git%20Client';
 
 const GitSyncModal = ({ collection, onClose, isTab = false }) => {
   const collectionPath = collection?.pathname;
@@ -807,7 +807,7 @@ const GitSyncModal = ({ collection, onClose, isTab = false }) => {
             <div className="git-branding-badge">
               <span className="cat-brand-avatar">🐱</span>
               <div className="cat-brand-info">
-                <span className="cat-brand-title">NgaRing</span>
+                <span className="cat-brand-title">Nyawit</span>
                 <span className="cat-brand-sub">Git Studio</span>
               </div>
             </div>
@@ -874,7 +874,7 @@ const GitSyncModal = ({ collection, onClose, isTab = false }) => {
             <div className="git-branding-badge">
               <span className="cat-brand-avatar">🐱</span>
               <div className="cat-brand-info">
-                <span className="cat-brand-title">NgaRing</span>
+                <span className="cat-brand-title">Nyawit</span>
                 <span className="cat-brand-sub">Git Studio</span>
               </div>
             </div>
@@ -1483,7 +1483,7 @@ const GitSyncModal = ({ collection, onClose, isTab = false }) => {
                       {`( ^.^ )`}<br />
                       {` > ^ < `}
                     </div>
-                    <div className="cat-title">NgaRing Git Studio</div>
+                    <div className="cat-title">Nyawit Git Studio</div>
                     <div className="cat-subtitle">
                       {totalChangesCount > 0
                         ? `${totalChangesCount} file(s) changed. Select a file on the left to inspect differences.`

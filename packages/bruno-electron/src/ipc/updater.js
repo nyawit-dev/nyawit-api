@@ -136,13 +136,13 @@ function registerUpdaterIpc(mainWindow) {
   });
 
   ipcMain.handle('updater:open-download-page', (event, target) => {
-    let url = 'https://github.com/nyawit-dev/ngaRing-Api/releases';
+    let url = 'https://github.com/nyawit-dev/nyawit-api/releases';
     if (target) {
       if (typeof target === 'string' && (target.startsWith('http://') || target.startsWith('https://'))) {
         url = target;
       } else {
         const tag = target.startsWith('v') ? target : `v${target}`;
-        url = `https://github.com/nyawit-dev/ngaRing-Api/releases/tag/${tag}`;
+        url = `https://github.com/nyawit-dev/nyawit-api/releases/tag/${tag}`;
       }
     }
     console.log('[Updater] Opening URL in external browser:', url);

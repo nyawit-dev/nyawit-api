@@ -12,7 +12,7 @@ const notarizeApp = async function (params) {
     return;
   }
 
-  let appId = 'com.ngaringapi.app';
+  let appId = 'com.nyawitapi.app';
 
   let appPath = path.join(params.appOutDir, `${params.packager.appInfo.productFilename}.app`);
   if (!fs.existsSync(appPath)) {

@@ -107,7 +107,7 @@ const defaultPreferences = {
   notifications: {
     enableBruno: true,
     enableCustom: true,
-    customUrl: 'https://raw.githubusercontent.com/nyawit-dev/ngaRing-Api/main/notifications.json'
+    customUrl: 'https://raw.githubusercontent.com/nyawit-dev/nyawit-api/main/notifications.json'
   }
 };
 
