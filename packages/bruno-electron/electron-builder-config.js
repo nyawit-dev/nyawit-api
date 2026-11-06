@@ -6,6 +6,7 @@ const config = {
   appId: 'com.nyawitapi.app',
   productName: isBenchmark ? 'Nyawit API Benchmark' : 'Nyawit API',
   copyright: 'Copyright © 2026 nyawit.dev',
+  legalTrademarks: 'nyawit.dev',
   publish: {
     provider: 'github',
     owner: 'nyawit-dev',
@@ -95,9 +96,9 @@ const config = {
     synopsis: 'Local-first API IDE and client',
     description: 'Local-first, git-friendly API IDE and client for modern developers.',
     desktop: {
-      Name: 'Nyawit API',
-      Comment: 'Local-first, git-friendly API IDE and client for modern developers.',
-      MimeType: 'x-scheme-handler/nyawitapi;'
+      entry: {
+        MimeType: 'x-scheme-handler/nyawitapi;'
+      }
     }
   },
   deb: {
@@ -132,9 +133,7 @@ const config = {
         target: 'nsis',
         arch: ['x64']
       }
-    ],
-    sign: null,
-    legalTrademarks: 'nyawit.dev'
+    ]
   },
   nsis: {
     include: 'resources/installer.nsh',
