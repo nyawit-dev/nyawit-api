@@ -6,7 +6,6 @@ const config = {
   appId: 'com.nyawitapi.app',
   productName: isBenchmark ? 'Nyawit API Benchmark' : 'Nyawit API',
   copyright: 'Copyright © 2026 nyawit.dev',
-  legalTrademarks: 'nyawit.dev',
   publish: {
     provider: 'github',
     owner: 'nyawit-dev',
@@ -128,6 +127,7 @@ const config = {
   win: {
     artifactName: 'NyawitApi_${version}_${arch}_win.${ext}',
     icon: 'resources/icons/win/icon.ico',
+    legalTrademarks: 'nyawit.dev',
     target: [
       {
         target: 'nsis',
