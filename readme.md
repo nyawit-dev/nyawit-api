@@ -20,27 +20,27 @@
 
 ## Apa itu Nyawit API?
 
-**Nyawit API** adalah lingkungan kerja untuk membuat permintaan API, memeriksa respons, dan menjalankan pengujian. Collection disimpan sebagai berkas lokal yang mudah ditinjau dan dikelola dengan Git—bukan harus dititipkan ke layanan awan tertentu.
+**Nyawit API** adalah lingkungan kerja untuk mengeksekusi permintaan API, memeriksa janji-janji respons, dan menjalankan uji kelayakan—tanpa jalur “orang dalam” atau revisi aturan di tengah malam. Seluruh *collection* disimpan sebagai berkas lokal di komputer sendiri dan mudah dikelola lewat Git. Aset digital Anda tidak perlu dititipkan ke layanan awan pihak ketiga yang sewaktu-waktu bisa “bocor halus”, lalu dianggap bukan masalah serius.
 
-Nyawit API dibangun di atas fondasi sumber terbuka **Bruno**. Bruno bukan tempelan nama di halaman ucapan terima kasih: ekosistem, format collection, dan kerja para kontributornya adalah bagian penting dari proyek ini. Nyawit API mempertahankan fondasi tersebut sambil mengembangkan identitas, pengalaman, dan tambahan fiturnya sendiri.
+Nyawit API dibangun di atas fondasi sumber terbuka **Bruno**, sebagai bentuk penghormatan pada konsep keberlanjutan. Bruno bukan sekadar “pembangunan fondasi infrastruktur” yang namanya dilupakan begitu tongkat estafet berganti: ekosistem, format *collection*, dan kerja para kontributor pendahulunya tetap dijaga, sambil menghadirkan fitur dan identitas yang lebih segar.
 
 ### Sedikit suasana kerja
 
-Di negeri fiktif bernama **Republik Antrean**, satu permintaan sederhana kadang terasa perlu formulir, stempel, dan persetujuan dari meja yang kebetulan sedang istirahat. API setidaknya bisa kita uji dengan lebih langsung: susun request, kirim, baca respons, lalu perbaiki yang memang perlu diperbaiki.
+Di negeri dongeng bernama **Republik Konoha Emas 2045**, mengurus satu *request* sederhana kadang terasa harus menunggu jadwal pembagian makan siang gratis, menghitung anggaran yang bikin bendahara pusing, melewati iuran wajib dan pajak yang berubah diam-diam, lalu menunggu restu “Paman Konstitusi”. Untungnya, di Nyawit API prosesnya lebih waras: susun *request*, kirim, baca *response* apa adanya, lalu *debug* bagian yang memang bermasalah—tanpa cawe-cawe, membentuk satgas yang rapat di hotel, atau mengucapkan “Saya belum baca drafnya” saat skrip *crash* di produksi.
 
-Humor di sini menyindir pengalaman birokrasi secara umum dan fiktif; bukan tuduhan atau pernyataan faktual tentang orang, lembaga, maupun peristiwa tertentu. Kalau antreannya makin panjang, itu urusan endpoint—bukan ramalan politik.
+Humor di halaman ini adalah satire fiktif tentang birokrasi dan tata kelola sistem, bukan tuduhan tentang orang, lembaga, atau peristiwa nyata. Kalau antrean *request* terkena *rate limit* atau *timeout*, itu urusan *endpoint* dan kapasitasnya—bukan jalur yang sedang disterilkan untuk siapa pun.
 
-## Kenapa memakai Nyawit API?
+## Kenapa memilih Koalisi Nyawit API?
 
-- **Berorientasi lokal:** collection dan data kerja disimpan di komputer pengguna dalam berkas biasa.
-- **Git terintegrasi:** tinjau perubahan, stage, commit, branch, sinkronkan remote, dan tangani konflik dari dalam aplikasi.
-- **Berangkat dari Bruno:** tetap menghargai fondasi, format, dan ekosistem Bruno alih-alih membangun ulang semuanya dari nol.
-- **Pintasan praktis:** gunakan `Ctrl+K` atau `Cmd+K` untuk mencari request, collection, perintah, dan pengaturan.
-- **Beragam protokol:** dukungan untuk REST, GraphQL, gRPC, dan WebSocket.
-- **Dibuat untuk pengujian:** jalankan skrip pra-request, assertion, dan kumpulan request.
-- **Antarmuka desktop dan web:** proyek menyediakan pengembangan Electron dan antarmuka web.
+- **Hilirisasi lokal sejati:** *Collection* dan data kerja disimpan langsung di komputer dalam berkas teks biasa, bukan diwajibkan melewati layanan *cloud* pihak ketiga.
+- **Git terintegrasi tanpa drama dinasti:** Tinjau perubahan, *stage*, *commit*, buat *branch*, sinkronkan *remote*, dan selesaikan konflik *merge* lewat musyawarah mufakat di dalam aplikasi.
+- **Keberlanjutan fondasi Bruno:** Hormati arsitektur, format, dan ekosistem Bruno yang telah teruji alih-alih membongkar proyek dari nol setiap pergantian periode.
+- **Pintasan praktis, bukan jalur khusus keluarga:** Tekan `Ctrl+K` atau `Cmd+K` untuk mencari *request*, *collection*, perintah, dan pengaturan secara instan.
+- **Koalisi protokol gemuk:** Kelola REST, GraphQL, gRPC, dan WebSocket dalam satu lingkungan kerja tanpa bagi-bagi kursi memori secara berlebihan.
+- **Uji fakta dan integritas:** Jalankan skrip *pra-request*, *assertion*, dan kumpulan *request* untuk memastikan *server* benar-benar menepati janji, bukan sekadar mengirim status `200 OK` dengan *payload* kosong.
+- **Dua kaki di desktop dan web:** Gunakan aplikasi Electron atau antarmuka web, dari komputer pribadi hingga lingkungan kerja yang lebih besar—tanpa anggaran perjalanan dinas.
 
-> **Catatan privasi:** repositori ini memiliki jalur telemetri PostHog yang dapat aktif apabila kunci API telemetri disediakan saat aplikasi dibangun. Implementasi yang ditinjau mengirim event mulai dengan informasi sistem operasi dan versi; komponen Golden Edition juga mengirim event interaksi modal dan tombol. Periksa konfigurasi build yang Anda gunakan untuk mengetahui apakah telemetri aktif. Karena itu, jangan menganggap semua build otomatis bebas telemetri.
+> **Catatan privasi—transparansi tanpa pasal karet:** Repositori ini memiliki jalur telemetri PostHog yang hanya aktif apabila kunci API telemetri dipasang saat aplikasi dibangun (*build*). Implementasi yang ditinjau mengirim *event* dasar berupa informasi sistem operasi dan versi aplikasi. Komponen **Golden Edition (Edisi Indonesia Emas)** juga mencatat interaksi modal dan tombol. Periksa konfigurasi *build* yang Anda gunakan untuk memastikan status telemetri. Jangan hanya mengandalkan klaim bebas pemantauan—periksa sendiri kode dan konfigurasi, karena kewaspadaan tetap lebih bisa diandalkan daripada janji manis di baliho.
 
 ## Fitur utama
 
@@ -149,11 +149,11 @@ Untuk pilihan pengujian lain, lihat perintah yang tersedia di `package.json` dan
 
 ## Kontribusi
 
-Laporan bug, usulan fitur, dan kontribusi kode sangat diterima. Sebelum mengirim perubahan, silakan baca [panduan kontribusi](contributing.md) dan [standar pengodean](CODING_STANDARDS.md). Untuk usulan yang menyentuh fondasi Bruno, pertimbangkan dampaknya terhadap kompatibilitas dan sinkronisasi dengan upstream—jangan sampai perbaikan kecil berubah menjadi rapat lintas kementerian.
+Laporan bug, usulan fitur, dan kontribusi kode sangat diterima. Sebelum mengirim perubahan, silakan baca [panduan kontribusi](contributing.md) dan [standar pengodean](CODING_STANDARDS.md). Untuk pertanyaan keamanan, lihat [kebijakan keamanan](security.md).
 
 ## Lisensi dan penghargaan
 
-Nyawit API didistribusikan di bawah [Lisensi MIT](license.md). Proyek ini dibangun di atas fondasi sumber terbuka **Bruno**, yang dibuat oleh Anoop M D dan para kontributor Bruno. Terima kasih kepada mereka dan komunitas sumber terbuka yang telah membangun serta merawat fondasi tersebut.
+Nyawit API didistribusikan di bawah [Lisensi MIT](license.md). Proyek ini dibangun di atas fondasi sumber terbuka **Bruno**, yang dibuat oleh Anoop M D dan para kontributor Bruno. Terima kasih kepada mereka yang telah membangun dan merawat ekosistem tersebut.
 
 Silakan baca berkas lisensi dan pemberitahuan atribusi yang disertakan di repositori sebelum menggunakan atau mendistribusikan perangkat lunak ini.
 
