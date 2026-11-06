@@ -5,7 +5,7 @@ We appreciate responsible disclosure and value contributions that help improve t
 
 ## Reporting a Vulnerability  
 
-To report a security issue, please contact us at [ringga.itdev@batamfast.com](mailto:ringga.itdev@batamfast.com) or submit a private security advisory through the repository at [https://github.com/nyawit-dev/nyawit-api/security](https://github.com/nyawit-dev/nyawit-api/security).
+To report a security issue, please contact us at [ringga.itdev@batamfast.com](mailto:nyawit.dev@gmail.com) or submit a private security advisory through the repository at [https://github.com/nyawit-dev/nyawit-api/security](https://github.com/nyawit-dev/nyawit-api/security).
 
 When reporting a vulnerability, please include as many details as possible to help us investigate:  
 
