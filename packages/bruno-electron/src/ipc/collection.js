@@ -2805,7 +2805,7 @@ const registerMainEventHandlers = (mainWindow) => {
   ipcMain.on('menu:open-collection', triggerOpenCollection);
 
   ipcMain.on('main:open-docs', () => {
-    const docsURL = 'https://docs.usebruno.com';
+    const docsURL = 'https://github.com/nyawit-dev/nyawit-api#readme';
     shell.openExternal(docsURL);
   });
 

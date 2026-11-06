@@ -46,7 +46,7 @@ To help us keep things organised, please use the appropriate channel for each ty
 | GitHub Issues | Bug reports and feature requests. |
 | GitHub Discussions | Questions, how-to discussions, and technical topics that don't fit as bugs or feature requests. |
 | Discord | Real-time discussion, brainstorming, and informal community chat. |
-| [Support](https://www.usebruno.com/support) | Account, licensing, billing, and customer support enquiries. |
+| [Support](https://github.com/nyawit-dev/nyawit-api/issues) | Bug reports, questions, and developer support enquiries. |
 
 We keep GitHub Discussions open because they provide a valuable place for technical questions and longer-form conversations that don't naturally belong in the issue tracker. Discord is a great option if you prefer real-time, chat-based conversations with the community.
 

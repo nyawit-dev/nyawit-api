@@ -19,13 +19,13 @@
 | [Slovenčina](docs/contributing/contributing_sk.md)
 | [فارسی](docs/contributing/contributing_fa.md)
 
-## Let's make Bruno better, together!!
+## Let's make Nyawit API better, together!!
 
-We are happy that you are looking to improve Bruno. Below are the guidelines to run Bruno on your computer.
+We are happy that you are looking to improve Nyawit API. Below are the guidelines to run Nyawit API on your computer.
 
 ### Technology Stack
 
-Bruno is built using React and Electron.
+Nyawit API is built using React and Electron.
 
 Libraries we use
 
@@ -69,7 +69,7 @@ End-to-end (Playwright) tests live in the top-level `tests/` directory.
 
 ## Development
 
-Bruno is a desktop app. Below are the instructions to run Bruno.
+Nyawit API is a desktop app. Below are the instructions to run Nyawit API.
 
 > Note: We use React for the frontend and rsbuild for build and dev server.
 

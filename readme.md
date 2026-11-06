@@ -26,11 +26,12 @@ Instead of storing your sensitive API requests, credentials, and test suites in 
 
 ### Why Nyawit API?
 
-- **Local-First Architecture:** Your collections, environment variables, and request data reside on your disk. Nyawit API functions completely offline.
-- **Native Git Collaboration:** Every request is a readable file. Commit, create pull requests, review diffs, and resolve merge conflicts using your existing Git workflow.
-- **Fast & Snappy:** Built with Rsbuild and modern React for instant startup and rapid response rendering.
-- **Zero Cloud Lock-in:** No forced account creation, no tracking telemetry of your payloads, and no subscription walls for core features.
-- **Multi-Protocol Support:** Seamlessly test REST, GraphQL, gRPC, and WebSocket APIs in one unified workspace.
+- **Local-First Architecture:** Your collections, environment variables, and request data reside securely on your disk. Nyawit API functions completely offline with zero telemetry tracking.
+- **Visual Git Studio:** Built-in Git client to stage, unstage, view diffs, branch, commit, push, and pull changes directly within the IDE without external terminals.
+- **Integrated Command Palette:** Navigate requests, execute actions, switch collections, and open settings instantly using `Ctrl+K` (or `Cmd+K`).
+- **Seamless In-App Updater:** Direct background updates with live progress dialogs, download speeds, ETA, and Windows Authenticode bypass for open-source builds.
+- **Fast & Snappy:** Built with Rsbuild and modern React for instant startup and rapid response rendering even with large collections.
+- **Multi-Protocol Support:** Test REST, GraphQL, gRPC, and WebSocket APIs in one unified workspace.
 
 ---
 
@@ -40,6 +41,8 @@ Instead of storing your sensitive API requests, credentials, and test suites in 
 | :--- | :--- |
 | **Request Builder** | Comprehensive support for URL parameters, custom headers, body types (JSON, XML, Form-Data, Binary, Raw). |
 | **Response Inspector** | Syntax-highlighted viewer with search, formatted JSON tree, response headers, status codes, and latency metrics. |
+| **Nyawit Git Studio** | Dedicated in-app Git control panel for managing collection versioning, remote sync, commit histories, and conflicts. |
+| **Command Palette** | Quick switcher (`Ctrl+K` / `Cmd+K`) across collections, folders, requests, commands, and settings. |
 | **Environment Management** | Multi-environment support with secret masking, inheritance, and dynamic variable interpolation. |
 | **Automated Testing** | Write pre-request scripts and assertions with a built-in test runner using familiar JavaScript syntax. |
 | **Collection Runner** | Run batches of requests sequentially with configurable iterations and detailed reporting. |
@@ -72,6 +75,10 @@ Instead of storing your sensitive API requests, credentials, and test suites in 
      ```bash
      bun run dev
      ```
+   - **Desktop with Main Process Watcher:**
+     ```bash
+     bun run dev:watch
+     ```
    - **Web Browser Interface:**
      ```bash
      bun run dev:web
@@ -97,7 +104,7 @@ bun run build:electron:mac
 bun run build:electron:linux
 ```
 
-Packaged installers will be generated inside the `packages/bruno-electron/out` directory.
+Packaged installers and artifacts will be generated inside the `packages/bruno-electron/out` directory.
 
 ---
 
@@ -112,6 +119,8 @@ Packaged installers will be generated inside the `packages/bruno-electron/out` d
 │   ├── bruno-filestore/     # Local disk storage and collection persistence engine
 │   ├── bruno-requests/      # Network dispatchers (HTTP, HTTPS, gRPC, WS)
 │   ├── bruno-schema/        # Validation schemas for requests and environments
+│   ├── bruno-io/            # Collection disk serialization and output
+│   ├── bruno-sqlite/        # Persistent high-performance collection cache
 │   └── bruno-lang/          # Language parsers and serializers
 └── DESIGN.md                # Design system specification and token guidelines
 ```

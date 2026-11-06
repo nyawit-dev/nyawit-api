@@ -12,6 +12,7 @@ function guardBranding() {
     try {
       const content = fs.readFileSync(electronPkgPath, 'utf8');
       const pkg = JSON.parse(content);
+      pkg.name = 'nyawit-api';
       pkg.publisher = 'nyawit.dev';
       pkg.author = {
         name: 'nyawit.dev',
@@ -72,6 +73,7 @@ function guardBranding() {
   if (fs.existsSync(rootPkgPath)) {
     try {
       const pkg = JSON.parse(fs.readFileSync(rootPkgPath, 'utf8'));
+      pkg.name = 'nyawit-api';
       pkg.publisher = 'nyawit.dev';
       pkg.author = {
         name: 'nyawit.dev',
@@ -79,6 +81,10 @@ function guardBranding() {
         url: 'https://github.com/nyawit-dev/nyawit-api'
       };
       pkg.homepage = 'https://github.com/nyawit-dev/nyawit-api';
+      pkg.repository = {
+        type: 'git',
+        url: 'https://github.com/nyawit-dev/nyawit-api.git'
+      };
       fs.writeFileSync(rootPkgPath, JSON.stringify(pkg, null, 2) + '\n');
       console.log('✓ Guarded root package.json');
     } catch (err) {

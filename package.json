@@ -1,5 +1,5 @@
 {
-  "name": "usebruno",
+  "name": "nyawit-api",
   "private": true,
   "workspaces": [
     "packages/bruno-app",
@@ -146,5 +146,9 @@
     "ajv": "^8.18.0",
     "git-url-parse": "^14.1.0"
   },
-  "publisher": "nyawit.dev"
+  "publisher": "nyawit.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nyawit-dev/nyawit-api.git"
+  }
 }
