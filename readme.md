@@ -1,134 +1,162 @@
 <p align="center">
-  <img src="assets/images/logo.png" width="96" alt="Nyawit API Logo" />
+  <img src="assets/images/logo.png" width="96" alt="Logo Nyawit API" />
 </p>
 
 <h1 align="center">Nyawit API</h1>
 
 <p align="center">
-  <strong>Fast, Local-First API IDE and Testing Environment</strong><br>
-  Built for developers who value data privacy, Git collaboration, and raw performance.
+  <strong>Tempat meracik, menguji, dan merapikan API—langsung di komputer sendiri.</strong><br>
+  Berangkat dari fondasi Bruno, untuk pengembang yang menyukai privasi, Git, dan aplikasi yang tidak mengajak rapat dulu sebelum mengirim permintaan.
 </p>
 
 <p align="center">
-  <a href="license.md"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
-  <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-brightgreen.svg" alt="Platforms">
-  <img src="https://img.shields.io/badge/Local--First-100%25-cyan.svg" alt="Local First">
-  <img src="https://img.shields.io/badge/Git--Native-Enabled-orange.svg" alt="Git Native">
+  <a href="license.md"><img src="https://img.shields.io/badge/Lisensi-MIT-blue.svg" alt="Lisensi MIT"></a>
+  <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-brightgreen.svg" alt="Windows, macOS, dan Linux">
+  <img src="https://img.shields.io/badge/Penyimpanan-Lokal-cyan.svg" alt="Penyimpanan lokal">
+  <img src="https://img.shields.io/badge/Git-Terintegrasi-orange.svg" alt="Git terintegrasi">
 </p>
 
 ---
 
-## Overview
+## Apa itu Nyawit API?
 
-**Nyawit API** is a modern, developer-centric API client and IDE designed to replace bloated cloud-based tools. 
+**Nyawit API** adalah lingkungan kerja untuk membuat permintaan API, memeriksa respons, dan menjalankan pengujian. Collection disimpan sebagai berkas lokal yang mudah ditinjau dan dikelola dengan Git—bukan harus dititipkan ke layanan awan tertentu.
 
-Instead of storing your sensitive API requests, credentials, and test suites in a remote vendor database, Nyawit API saves your collections directly on your local filesystem using plain-text files.
+Nyawit API dibangun di atas fondasi sumber terbuka **Bruno**. Bruno bukan tempelan nama di halaman ucapan terima kasih: ekosistem, format collection, dan kerja para kontributornya adalah bagian penting dari proyek ini. Nyawit API mempertahankan fondasi tersebut sambil mengembangkan identitas, pengalaman, dan tambahan fiturnya sendiri.
 
-### Why Nyawit API?
+### Sedikit suasana kerja
 
-- **Local-First Architecture:** Your collections, environment variables, and request data reside securely on your disk. Nyawit API functions completely offline with zero telemetry tracking.
-- **Visual Git Studio:** Built-in Git client to stage, unstage, view diffs, branch, commit, push, and pull changes directly within the IDE without external terminals.
-- **Integrated Command Palette:** Navigate requests, execute actions, switch collections, and open settings instantly using `Ctrl+K` (or `Cmd+K`).
-- **Seamless In-App Updater:** Direct background updates with live progress dialogs, download speeds, ETA, and Windows Authenticode bypass for open-source builds.
-- **Fast & Snappy:** Built with Rsbuild and modern React for instant startup and rapid response rendering even with large collections.
-- **Multi-Protocol Support:** Test REST, GraphQL, gRPC, and WebSocket APIs in one unified workspace.
+Di negeri fiktif bernama **Republik Antrean**, satu permintaan sederhana kadang terasa perlu formulir, stempel, dan persetujuan dari meja yang kebetulan sedang istirahat. API setidaknya bisa kita uji dengan lebih langsung: susun request, kirim, baca respons, lalu perbaiki yang memang perlu diperbaiki.
 
----
+Humor di sini menyindir pengalaman birokrasi secara umum dan fiktif; bukan tuduhan atau pernyataan faktual tentang orang, lembaga, maupun peristiwa tertentu. Kalau antreannya makin panjang, itu urusan endpoint—bukan ramalan politik.
 
-## Core Capabilities
+## Kenapa memakai Nyawit API?
 
-| Feature | Description |
+- **Berorientasi lokal:** collection dan data kerja disimpan di komputer pengguna dalam berkas biasa.
+- **Git terintegrasi:** tinjau perubahan, stage, commit, branch, sinkronkan remote, dan tangani konflik dari dalam aplikasi.
+- **Berangkat dari Bruno:** tetap menghargai fondasi, format, dan ekosistem Bruno alih-alih membangun ulang semuanya dari nol.
+- **Pintasan praktis:** gunakan `Ctrl+K` atau `Cmd+K` untuk mencari request, collection, perintah, dan pengaturan.
+- **Beragam protokol:** dukungan untuk REST, GraphQL, gRPC, dan WebSocket.
+- **Dibuat untuk pengujian:** jalankan skrip pra-request, assertion, dan kumpulan request.
+- **Antarmuka desktop dan web:** proyek menyediakan pengembangan Electron dan antarmuka web.
+
+> **Catatan privasi:** repositori ini memiliki jalur telemetri PostHog yang dapat aktif apabila kunci API telemetri disediakan saat aplikasi dibangun. Implementasi yang ditinjau mengirim event mulai dengan informasi sistem operasi dan versi; komponen Golden Edition juga mengirim event interaksi modal dan tombol. Periksa konfigurasi build yang Anda gunakan untuk mengetahui apakah telemetri aktif. Karena itu, jangan menganggap semua build otomatis bebas telemetri.
+
+## Fitur utama
+
+| Fitur | Kegunaan |
 | :--- | :--- |
-| **Request Builder** | Comprehensive support for URL parameters, custom headers, body types (JSON, XML, Form-Data, Binary, Raw). |
-| **Response Inspector** | Syntax-highlighted viewer with search, formatted JSON tree, response headers, status codes, and latency metrics. |
-| **Nyawit Git Studio** | Dedicated in-app Git control panel for managing collection versioning, remote sync, commit histories, and conflicts. |
-| **Command Palette** | Quick switcher (`Ctrl+K` / `Cmd+K`) across collections, folders, requests, commands, and settings. |
-| **Environment Management** | Multi-environment support with secret masking, inheritance, and dynamic variable interpolation. |
-| **Automated Testing** | Write pre-request scripts and assertions with a built-in test runner using familiar JavaScript syntax. |
-| **Collection Runner** | Run batches of requests sequentially with configurable iterations and detailed reporting. |
-| **Design System** | Tailored dark and light themes featuring high-contrast Cyber-Cyan and Ocean-Teal palettes. |
+| **Pembuat request** | Susun URL, parameter, header, autentikasi, serta isi JSON, XML, form-data, biner, atau teks biasa. |
+| **Pemeriksa respons** | Lihat status, header, waktu respons, pencarian, serta tampilan terformat dan berwarna. |
+| **Pengelolaan environment** | Atur beberapa environment, variabel, pewarisan, interpolasi, dan penyamaran nilai rahasia. |
+| **Pengujian otomatis** | Tulis skrip JavaScript pra-request dan assertion untuk memeriksa hasil. |
+| **Collection Runner** | Jalankan serangkaian request dengan iterasi dan laporan hasil. |
+| **Nyawit Git Studio** | Kelola perubahan collection, commit, branch, remote, riwayat, diff, stash, dan konflik Git. |
+| **Palet perintah** | Cari request, collection, perintah, dan pengaturan dengan `Ctrl+K` atau `Cmd+K`. |
+| **Tema** | Gunakan tampilan gelap atau terang. |
+| **Aplikasi desktop** | Bangun aplikasi untuk Windows, macOS, dan Linux menggunakan Electron. |
 
----
+## Mulai dari sumber
 
-## Getting Started
+### Persyaratan
 
-### Prerequisites
-
-- [Bun](https://bun.sh/) (v1.1+ recommended) or [Node.js](https://nodejs.org/) (v20+ LTS)
+- [Bun](https://bun.sh/) (disarankan versi 1.1 atau lebih baru) atau [Node.js](https://nodejs.org/) (versi 20 LTS atau lebih baru)
 - [Git](https://git-scm.com/)
 
-### Installation from Source
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/nyawit-dev/nyawit-api.git
-   cd nyawit-api
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   bun run setup
-   ```
-
-3. **Start the development application:**
-   - **Desktop (Electron):**
-     ```bash
-     bun run dev
-     ```
-   - **Desktop with Main Process Watcher:**
-     ```bash
-     bun run dev:watch
-     ```
-   - **Web Browser Interface:**
-     ```bash
-     bun run dev:web
-     ```
-
----
-
-## Building Desktop Packages
-
-Nyawit API can be compiled into standalone native packages for Windows, macOS, and Linux:
+### Pasang dependensi dan jalankan
 
 ```bash
-# Production Web Build
-bun run build:web
+git clone https://github.com/nyawit-dev/nyawit-api.git
+cd nyawit-api
+bun run setup
+```
 
-# Windows Installer (.exe)
+Jalankan aplikasi desktop:
+
+```bash
+bun run dev
+```
+
+Jalankan desktop dengan pemantau proses utama:
+
+```bash
+bun run dev:watch
+```
+
+Jalankan antarmuka web:
+
+```bash
+bun run dev:web
+```
+
+## Bangun aplikasi
+
+Bangun antarmuka web:
+
+```bash
+bun run build:web
+```
+
+Bangun paket desktop:
+
+```bash
+# Windows
 bun run build:electron:win
 
-# macOS Installer (.dmg / .pkg)
+# macOS
 bun run build:electron:mac
 
-# Linux Package (.AppImage / .deb)
+# Linux
 bun run build:electron:linux
 ```
 
-Packaged installers and artifacts will be generated inside the `packages/bruno-electron/out` directory.
+Hasil build tersedia di `packages/bruno-electron/out`.
 
----
+## Pengujian dan pemeriksaan kode
 
-## Project Structure
+Jalankan pemeriksaan gaya kode:
 
-```text
-├── assets/                  # Application icons, branding, and imagery
-├── packages/
-│   ├── bruno-app/           # Core React frontend interface and IDE panels
-│   ├── bruno-electron/      # Electron main process, window management, and native shell
-│   ├── bruno-common/        # Shared utility functions and common data structures
-│   ├── bruno-filestore/     # Local disk storage and collection persistence engine
-│   ├── bruno-requests/      # Network dispatchers (HTTP, HTTPS, gRPC, WS)
-│   ├── bruno-schema/        # Validation schemas for requests and environments
-│   ├── bruno-io/            # Collection disk serialization and output
-│   ├── bruno-sqlite/        # Persistent high-performance collection cache
-│   └── bruno-lang/          # Language parsers and serializers
-└── DESIGN.md                # Design system specification and token guidelines
+```bash
+bun run lint
 ```
 
+Jalankan pengujian ujung ke ujung standar:
+
+```bash
+bun run test:e2e
+```
+
+Untuk pilihan pengujian lain, lihat perintah yang tersedia di `package.json` dan konfigurasi Playwright.
+
+## Susunan proyek
+
+```text
+├── assets/                  # Ikon, gambar, dan aset merek
+├── packages/
+│   ├── bruno-app/           # Antarmuka React dan panel aplikasi
+│   ├── bruno-electron/      # Proses utama Electron dan integrasi desktop
+│   ├── bruno-cli/           # Antarmuka baris perintah
+│   ├── bruno-common/        # Utilitas dan struktur data bersama
+│   ├── bruno-filestore/     # Penyimpanan collection di disk
+│   ├── bruno-requests/      # Pengiriman HTTP, HTTPS, gRPC, dan WebSocket
+│   ├── bruno-schema/        # Skema validasi
+│   ├── bruno-io/            # Pembacaan dan penulisan collection
+│   ├── bruno-sqlite/        # Cache collection berbasis SQLite
+│   └── bruno-lang/          # Parser dan serialisasi bahasa collection
+├── docs/                    # Dokumentasi proyek
+└── DESIGN.md                # Panduan sistem desain
+```
+
+## Kontribusi
+
+Laporan bug, usulan fitur, dan kontribusi kode sangat diterima. Sebelum mengirim perubahan, silakan baca [panduan kontribusi](contributing.md) dan [standar pengodean](CODING_STANDARDS.md). Untuk usulan yang menyentuh fondasi Bruno, pertimbangkan dampaknya terhadap kompatibilitas dan sinkronisasi dengan upstream—jangan sampai perbaikan kecil berubah menjadi rapat lintas kementerian.
+
+## Lisensi dan penghargaan
+
+Nyawit API didistribusikan di bawah [Lisensi MIT](license.md). Proyek ini dibangun di atas fondasi sumber terbuka **Bruno**, yang dibuat oleh Anoop M D dan para kontributor Bruno. Terima kasih kepada mereka dan komunitas sumber terbuka yang telah membangun serta merawat fondasi tersebut.
+
+Silakan baca berkas lisensi dan pemberitahuan atribusi yang disertakan di repositori sebelum menggunakan atau mendistribusikan perangkat lunak ini.
+
 ---
 
-## License & Attribution
-
-**Nyawit API** is distributed under the [MIT License](license.md).
-
-This project is built upon the open-source foundation of Bruno, created by Anoop M D and contributors under the MIT License. We gratefully acknowledge the original authors and the open-source community for pioneering local-first API tooling.
+<p align="center"><em>Semoga request-nya lancar, responsnya jelas, dan jumlah stempelnya cukup satu: tombol Kirim.</em></p>
