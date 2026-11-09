@@ -4,6 +4,7 @@ import get from 'lodash/get';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import {
   IconArrowsSort,
+  IconBrandGit,
   IconDotsVertical,
   IconDownload,
   IconFolder,
@@ -243,6 +244,15 @@ const CollectionsSection = () => {
       label: 'Create collection',
       onClick: () => {
         dispatch(setIsCreatingCollection(true));
+      }
+    },
+    {
+      id: 'clone-git',
+      leftSection: IconBrandGit,
+      label: 'Clone Git repository',
+      onClick: () => {
+        setGitRepositoryUrl(null);
+        setShowCloneGitModal(true);
       }
     },
     {

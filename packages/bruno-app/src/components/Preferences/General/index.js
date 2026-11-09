@@ -56,6 +56,9 @@ const General = () => {
           return !(this.parent.enabled && (value === undefined || value === ''));
         })
     }),
+    fileWatcher: Yup.object({
+      autoRefresh: Yup.boolean()
+    }),
     oauth2: Yup.object({
       useSystemBrowser: Yup.boolean()
     }),
@@ -78,6 +81,9 @@ const General = () => {
       autoSave: {
         enabled: get(preferences, 'autoSave.enabled', false),
         interval: get(preferences, 'autoSave.interval', 1000)
+      },
+      fileWatcher: {
+        autoRefresh: get(preferences, 'fileWatcher.autoRefresh', true)
       },
       oauth2: {
         useSystemBrowser: get(preferences, 'request.oauth2.useSystemBrowser', false)
@@ -119,6 +125,9 @@ const General = () => {
         autoSave: {
           enabled: newPreferences.autoSave.enabled,
           interval: newPreferences.autoSave.interval
+        },
+        fileWatcher: {
+          autoRefresh: get(newPreferences, 'fileWatcher.autoRefresh', true)
         },
         general: {
           defaultLocation: newPreferences.defaultLocation
@@ -308,6 +317,20 @@ const General = () => {
               disabled={!autoSaveEnabled}
             />
           </SettingsField>
+        </SettingsGroup>
+
+        <SettingsGroup
+          title="File Watching & Auto Refresh"
+          description="Control how Bruno reacts when collection files are modified, created, or deleted externally"
+        >
+          <CheckboxSetting
+            id="fileWatcherAutoRefresh"
+            name="fileWatcher.autoRefresh"
+            label="Auto Refresh on External Changes"
+            description="Automatically sync requests, collections, and environments when files or folders are modified or deleted externally."
+            checked={get(formik.values, 'fileWatcher.autoRefresh', true)}
+            onChange={formik.handleChange}
+          />
         </SettingsGroup>
 
         <SettingsGroup title="Requests">

@@ -47,6 +47,7 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
     ? get(preferences, 'general.defaultLocation', '')
     : (activeWorkspace?.pathname ? path.join(activeWorkspace.pathname, 'collections') : '');
   const inputRef = useRef();
+  const lastFetchedUrlRef = useRef(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -62,10 +63,22 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
   }, [progressData]);
 
   const loadBranches = async (url) => {
+    if (!url || typeof url !== 'string') {
+      setBranchListing(EMPTY_BRANCH_LISTING);
+      return;
+    }
+    const cleanUrl = url.trim();
+    if (!cleanUrl) {
+      setBranchListing(EMPTY_BRANCH_LISTING);
+      return;
+    }
+
     setBranchListing({ ...EMPTY_BRANCH_LISTING, loading: true });
     try {
-      const { branches, defaultBranch } = await dispatch(fetchBranchesForRepositoryUrl(url));
-      setBranchListing({ branches, defaultBranch: defaultBranch || '', loading: false, failed: false });
+      const result = await dispatch(fetchBranchesForRepositoryUrl(cleanUrl));
+      const branches = Array.isArray(result?.branches) ? result.branches : [];
+      const defaultBranch = result?.defaultBranch || (branches.length > 0 ? branches[0] : '');
+      setBranchListing({ branches, defaultBranch, loading: false, failed: false });
     } catch (error) {
       console.error(error);
       setBranchListing({ ...EMPTY_BRANCH_LISTING, failed: true });
@@ -178,6 +191,46 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
       }
     }
   });
+
+  const repositoryUrlValue = formik.values.repositoryUrl;
+
+  useEffect(() => {
+    if (!repositoryUrlValue || !repositoryUrlValue.trim()) {
+      lastFetchedUrlRef.current = null;
+      setBranchListing(EMPTY_BRANCH_LISTING);
+      return;
+    }
+
+    const cleanUrl = repositoryUrlValue.trim();
+    if (cleanUrl === lastFetchedUrlRef.current) {
+      return;
+    }
+
+    const isPlausible =
+      cleanUrl.includes('://') ||
+      cleanUrl.startsWith('git@') ||
+      cleanUrl.endsWith('.git') ||
+      cleanUrl.includes('github.com') ||
+      cleanUrl.includes('gitlab.com') ||
+      cleanUrl.includes('bitbucket.org');
+
+    if (!isPlausible) {
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      lastFetchedUrlRef.current = cleanUrl;
+      loadBranches(cleanUrl);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [repositoryUrlValue]);
+
+  useEffect(() => {
+    if (branchListing.defaultBranch && !formik.values.branch) {
+      formik.setFieldValue('branch', branchListing.defaultBranch);
+    }
+  }, [branchListing.defaultBranch]);
 
   const browse = () => {
     dispatch(browseDirectory())
@@ -325,6 +378,21 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
                           autoCapitalize="off"
                           spellCheck="false"
                           onChange={formik.handleChange}
+                          onBlur={(e) => {
+                            formik.handleBlur(e);
+                            const clean = e.target.value?.trim();
+                            if (clean && clean !== lastFetchedUrlRef.current) {
+                              lastFetchedUrlRef.current = clean;
+                              loadBranches(clean);
+                            }
+                          }}
+                          onPaste={(e) => {
+                            const pasted = e.clipboardData?.getData('text')?.trim();
+                            if (pasted) {
+                              lastFetchedUrlRef.current = pasted;
+                              loadBranches(pasted);
+                            }
+                          }}
                           value={formik.values.repositoryUrl || ''}
                         />
                       </>
@@ -356,9 +424,33 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
                     Browse
                   </span>
                 </div>
+                <div className="flex items-center justify-between mt-4">
+                  <label htmlFor="branch-select" className="block font-semibold">
+                    Branch
+                  </label>
+                  {branchListing.loading ? (
+                    <span className="text-xs text-muted flex items-center gap-1">
+                      <IconRefresh size={12} className="animate-spin" /> Fetching branches...
+                    </span>
+                  ) : formik.values.repositoryUrl ? (
+                    <button
+                      type="button"
+                      className="text-xs text-link hover:underline bg-transparent border-0 p-0 cursor-pointer flex items-center gap-1"
+                      onClick={() => {
+                        const val = formik.values.repositoryUrl?.trim();
+                        if (val) {
+                          lastFetchedUrlRef.current = val;
+                          loadBranches(val);
+                        }
+                      }}
+                      title="Reload branches"
+                    >
+                      <IconRefresh size={12} /> Reload branches
+                    </button>
+                  ) : null}
+                </div>
                 <Select
-                  className="branch-select mt-5"
-                  label="Branch"
+                  className="branch-select mt-1"
                   data={branchListing.branches}
                   value={formik.values.branch || branchListing.defaultBranch}
                   onChange={(branch) => formik.setFieldValue('branch', branch || '')}
@@ -366,14 +458,37 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
                   allowDeselect={false}
                   loading={branchListing.loading}
                   rightSection={branchListing.loading ? undefined : <IconChevronDown size={12} strokeWidth={2} />}
-                  disabled={!branchListing.branches.length}
-                  placeholder={branchListing.loading ? 'Loading branches...' : 'Repository default'}
+                  disabled={!branchListing.branches.length && !branchListing.loading}
+                  placeholder={
+                    branchListing.loading
+                      ? 'Loading branches...'
+                      : branchListing.branches.length
+                        ? (branchListing.defaultBranch ? `Default (${branchListing.defaultBranch})` : 'Select a branch')
+                        : 'Enter repository URL to load branches'
+                  }
                   nothingFoundMessage="No branches match your search"
                   data-testid="clone-git-repository-branch-select"
                 />
-                {branchListing.failed && (
+                {branchListing.branches.length > 0 && (
                   <div className="text-muted text-xs mt-1">
-                    Branches could not be listed for this repository. Cloning will use the default branch.
+                    Found {branchListing.branches.length} branch{branchListing.branches.length > 1 ? 'es' : ''}. Default: <span className="font-semibold">{branchListing.defaultBranch || 'main'}</span>
+                  </div>
+                )}
+                {branchListing.failed && (
+                  <div className="text-muted text-xs mt-1 text-yellow-600 dark:text-yellow-400">
+                    Could not fetch remote branches. Cloning will use the default branch.
+                  </div>
+                )}
+                {(!branchListing.branches.length || branchListing.failed) && !branchListing.loading && formik.values.repositoryUrl && (
+                  <div className="mt-2">
+                    <input
+                      type="text"
+                      name="branch"
+                      placeholder="Or specify custom branch name (optional)"
+                      className="block textbox text-xs w-full"
+                      value={formik.values.branch || ''}
+                      onChange={formik.handleChange}
+                    />
                   </div>
                 )}
               </div>

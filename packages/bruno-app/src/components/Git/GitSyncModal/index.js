@@ -14,6 +14,7 @@ import {
   IconMinus,
   IconTrash,
   IconRefresh,
+  IconDownload,
   IconAlertCircle,
   IconCheck,
   IconX,
@@ -65,6 +66,7 @@ import {
   abortGitMerge
 } from 'utils/git/gitClient';
 import VisualDiffViewer from '../VisualDiffViewer';
+import CloneGitRepository from 'components/Sidebar/CloneGitRespository';
 import StyledWrapper from './StyledWrapper';
 
 const GITHUB_TOKEN_CREATE_URL = 'https://github.com/settings/tokens/new?scopes=repo&description=Nyawit%20API%20Git%20Client';
@@ -79,6 +81,7 @@ const GitSyncModal = ({ collection, onClose, isTab = false }) => {
   const [loading, setLoading] = useState(!initialCache);
   const [isRefreshingStatus, setIsRefreshingStatus] = useState(false);
   const [errorBanner, setErrorBanner] = useState(null);
+  const [showCloneModal, setShowCloneModal] = useState(false);
 
   // Changes / Diff state
   const [selectedFile, setSelectedFile] = useState(null);
@@ -851,13 +854,26 @@ const GitSyncModal = ({ collection, onClose, isTab = false }) => {
             <p style={{ margin: 0, fontSize: '0.8125rem', color: 'gray', maxWidth: '380px' }}>
               Track changes, review revisions, and sync your API collections with remote repositories like GitHub.
             </p>
-            <div style={{ marginTop: '0.75rem' }}>
+            <div style={{ marginTop: '0.75rem', display: 'flex', gap: '0.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <Button color="primary" onClick={handleInitRepo} loading={loading}>
                 Initialize Git Repository
+              </Button>
+              <Button variant="outline" color="secondary" onClick={() => setShowCloneModal(true)}>
+                <IconDownload size={14} className="mr-1" />
+                Clone Repository
               </Button>
             </div>
           </div>
         </div>
+        {showCloneModal && (
+          <CloneGitRepository
+            onClose={() => setShowCloneModal(false)}
+            onFinish={() => {
+              setShowCloneModal(false);
+              fetchStatus(true);
+            }}
+          />
+        )}
       </>,
       { size: 'md', style: isTab ? {} : { height: 'auto', minHeight: 'auto' } }
     );
@@ -1024,6 +1040,16 @@ const GitSyncModal = ({ collection, onClose, isTab = false }) => {
           {/* Right: Quick Action Controls */}
           <div className="git-header-right">
             <div className="git-action-group">
+              <button
+                type="button"
+                className="git-sync-btn"
+                onClick={() => setShowCloneModal(true)}
+                title="Clone repository from Git URL"
+              >
+                <IconDownload size={14} />
+                <span>Clone</span>
+              </button>
+
               <button
                 type="button"
                 className="git-sync-btn"
@@ -1864,7 +1890,34 @@ const GitSyncModal = ({ collection, onClose, isTab = false }) => {
                 </div>
               )}
             </div>
+
+            {/* Clone Repository Card */}
+            <div className="git-card">
+              <div className="card-title">
+                <IconDownload size={16} />
+                <span>Clone Remote Repository</span>
+              </div>
+              <div className="card-description">
+                Clone an external Git repository into your workspace to import and collaborate on API collections.
+              </div>
+              <div>
+                <Button color="secondary" variant="outline" size="sm" onClick={() => setShowCloneModal(true)}>
+                  <IconDownload size={14} className="mr-1" />
+                  Clone Repository...
+                </Button>
+              </div>
+            </div>
           </div>
+        )}
+
+        {showCloneModal && (
+          <CloneGitRepository
+            onClose={() => setShowCloneModal(false)}
+            onFinish={() => {
+              setShowCloneModal(false);
+              fetchStatus(true);
+            }}
+          />
         )}
       </>,
       {

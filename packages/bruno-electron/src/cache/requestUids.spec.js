@@ -80,4 +80,20 @@ describe('requestUids cache', () => {
 
     expect(getRequestUid(pathname)).not.toBe(uidBeforeClear);
   });
+
+  test('normalizes slashes and case on Windows', () => {
+    const pathname = path.join(collectionRoot, 'folder-a', 'request.bru');
+    const uid = getRequestUid(pathname);
+
+    // Forward slashes should resolve to the same uid
+    const forwardSlashes = pathname.replace(/\\/g, '/');
+    expect(getRequestUid(forwardSlashes)).toBe(uid);
+
+    if (process.platform === 'win32') {
+      const lower = pathname.toLowerCase();
+      const upper = pathname.toUpperCase();
+      expect(getRequestUid(lower)).toBe(uid);
+      expect(getRequestUid(upper)).toBe(uid);
+    }
+  });
 });

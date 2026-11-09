@@ -23,7 +23,8 @@ import {
   IconServer,
   IconFileArrowRight,
   IconAppWindow,
-  IconBrandGit
+  IconBrandGit,
+  IconRefresh
 } from '@tabler/icons';
 import OpenAPISyncIcon from 'components/Icons/OpenAPISync';
 import { toggleCollection, collapseFullCollection, clearSidebarSelection } from 'providers/ReduxStore/slices/collections';
@@ -214,6 +215,19 @@ const CollectionRow = ({ collection, searchText, openBulkMenu, children, isColle
 
   const handleCollapseFullCollection = () => {
     dispatch(collapseFullCollection({ collectionUid: collection.uid }));
+  };
+
+  const handleReloadCollection = () => {
+    dispatch(
+      mountCollection({
+        collectionUid: collection.uid,
+        collectionPathname: collection.pathname,
+        brunoConfig: collection.brunoConfig,
+        skipTabRestore: true
+      })
+    )
+      .then(() => toast.success('Collection reloaded'))
+      .catch(() => toast.error('Failed to reload collection'));
   };
 
   const viewCollectionSettings = () => {
@@ -483,6 +497,12 @@ const CollectionRow = ({ collection, searchText, openBulkMenu, children, isColle
       leftSection: IconFoldDown,
       label: 'Collapse',
       onClick: handleCollapseFullCollection
+    },
+    {
+      id: 'reload-collection',
+      leftSection: IconRefresh,
+      label: 'Reload Collection',
+      onClick: handleReloadCollection
     },
     {
       id: 'show-in-folder',

@@ -80,6 +80,7 @@ class MountManager {
       existing.win = win;
       existing.emit = emit;
       existing.brunoConfig = brunoConfig || existing.brunoConfig;
+      await this.#reconcile(existing);
       existing.state = this.#getIndex().entries(existing.collectionPath, { denylist: existing.brunoConfig?.ignore });
       await this.#emitTree(collectionUid, existing);
       return existing.tempDirectoryPath;

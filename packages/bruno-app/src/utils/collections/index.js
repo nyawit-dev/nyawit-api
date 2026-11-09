@@ -91,18 +91,33 @@ export const findCollectionByItemUid = (collections, itemUid) => {
   });
 };
 
+export const normalizePathForComparison = (p) => {
+  if (typeof p !== 'string') return '';
+  let normalized = p.replace(/\\/g, '/');
+  if (normalized.length > 1 && normalized.endsWith('/')) {
+    normalized = normalized.slice(0, -1);
+  }
+  if (/^[a-zA-Z]:/.test(normalized) || (typeof navigator !== 'undefined' && navigator.userAgent && /win/i.test(navigator.userAgent))) {
+    normalized = normalized.toLowerCase();
+  }
+  return normalized;
+};
+
 export const findItemByPathname = (items = [], pathname) => {
-  return find(items, (i) => i.pathname === pathname);
+  if (!pathname) return null;
+  const target = normalizePathForComparison(pathname);
+  return find(items, (i) => i.pathname && normalizePathForComparison(i.pathname) === target);
 };
 
 export const findItemInCollectionByPathname = (collection, pathname) => {
   if (!collection || !collection.items || !pathname) {
     return null;
   }
+  const target = normalizePathForComparison(pathname);
   const search = (items) => {
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
-      if (item.pathname === pathname) return item;
+      if (item.pathname && normalizePathForComparison(item.pathname) === target) return item;
       if (item.items && item.items.length) {
         const found = search(item.items);
         if (found) return found;
@@ -121,12 +136,13 @@ export const findParentItemInCollectionByPathname = (collection, pathname) => {
   if (!collection || !collection.items || !pathname) {
     return null;
   }
+  const target = normalizePathForComparison(pathname);
   const search = (items) => {
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
       if (item.items && item.items.length) {
         for (let j = 0; j < item.items.length; j++) {
-          if (item.items[j].pathname === pathname) return item;
+          if (item.items[j].pathname && normalizePathForComparison(item.items[j].pathname) === target) return item;
         }
         const found = search(item.items);
         if (found) return found;
@@ -990,12 +1006,14 @@ export const deleteItemInCollection = (itemUid, collection) => {
 };
 
 export const deleteItemInCollectionByPathname = (pathname, collection) => {
-  collection.items = filter(collection.items, (i) => i.pathname !== pathname);
+  if (!pathname || !collection) return;
+  const target = normalizePathForComparison(pathname);
+  collection.items = filter(collection.items, (i) => !i.pathname || normalizePathForComparison(i.pathname) !== target);
 
   let flattenedItems = flattenItems(collection.items);
   each(flattenedItems, (i) => {
     if (i.items && i.items.length) {
-      i.items = filter(i.items, (i) => i.pathname !== pathname);
+      i.items = filter(i.items, (nested) => !nested.pathname || normalizePathForComparison(nested.pathname) !== target);
     }
   });
 };

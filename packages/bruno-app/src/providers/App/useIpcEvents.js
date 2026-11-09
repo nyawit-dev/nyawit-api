@@ -13,8 +13,10 @@ import {
 import { isMockServerLogListening } from 'utils/mock-server/mock-server-log-subscription';
 import { mockServerFileEvent, mockServerFileDeletedEvent } from 'utils/mock-server/mock-server-instances';
 import {
-  addTab
+  addTab,
+  closeTabs
 } from 'providers/ReduxStore/slices/tabs';
+import { normalizePathForComparison } from 'utils/collections';
 import {
   brunoConfigUpdateEvent,
   collectionAddDirectoryEvent,
@@ -91,6 +93,17 @@ const useIpcEvents = () => {
         );
       }
       if (type === 'unlink') {
+        const targetPath = normalizePathForComparison(val?.meta?.pathname);
+        if (targetPath) {
+          const state = store.getState();
+          const openTabs = state.tabs?.tabs || [];
+          const tabsToClose = openTabs
+            .filter((t) => t.pathname && normalizePathForComparison(t.pathname) === targetPath)
+            .map((t) => t.uid);
+          if (tabsToClose.length > 0) {
+            dispatch(closeTabs({ tabUids: tabsToClose, reopenable: false }));
+          }
+        }
         setTimeout(() => {
           dispatch(
             collectionUnlinkFileEvent({
@@ -100,6 +113,21 @@ const useIpcEvents = () => {
         }, 100);
       }
       if (type === 'unlinkDir') {
+        const targetDirPath = normalizePathForComparison(val?.meta?.pathname);
+        if (targetDirPath) {
+          const state = store.getState();
+          const openTabs = state.tabs?.tabs || [];
+          const tabsToClose = openTabs
+            .filter((t) => {
+              if (!t.pathname) return false;
+              const tabNorm = normalizePathForComparison(t.pathname);
+              return tabNorm === targetDirPath || tabNorm.startsWith(`${targetDirPath}/`);
+            })
+            .map((t) => t.uid);
+          if (tabsToClose.length > 0) {
+            dispatch(closeTabs({ tabUids: tabsToClose, reopenable: false }));
+          }
+        }
         dispatch(
           collectionUnlinkDirectoryEvent({
             directory: val

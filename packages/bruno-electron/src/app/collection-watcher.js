@@ -19,7 +19,8 @@ const {
 
 const { uuid } = require('../utils/common');
 const { parseValueByDataType } = require('@usebruno/common/utils');
-const { getRequestUid } = require('../cache/requestUids');
+const { getRequestUid, deleteRequestUid } = require('../cache/requestUids');
+const { preferencesUtil } = require('../store/preferences');
 const { decryptStringSafe } = require('../utils/encryption');
 const { setBrunoConfig, getBrunoConfig } = require('../store/bruno-config');
 const EnvironmentSecretsStore = require('../store/env-secrets');
@@ -55,18 +56,60 @@ const unstageFromCache = (collectionPath, pathname) => {
   }
 };
 
+const pathsAreEqual = (p1, p2) => {
+  if (!p1 || !p2) return false;
+  const n1 = path.resolve(p1);
+  const n2 = path.resolve(p2);
+  if (process.platform === 'win32') {
+    return n1.toLowerCase() === n2.toLowerCase();
+  }
+  return n1 === n2;
+};
+
+const createEmptyRequest = (pathname) => {
+  const name = path.basename(pathname).replace(/\.[^/.]+$/, '');
+  return {
+    name,
+    type: 'http-request',
+    request: {
+      method: 'GET',
+      url: '',
+      headers: [],
+      params: [],
+      body: {
+        mode: 'none',
+        json: null,
+        text: null,
+        xml: null,
+        formUrlEncoded: [],
+        multipartForm: []
+      },
+      script: {},
+      vars: {
+        req: [],
+        res: []
+      },
+      assertions: [],
+      tests: '',
+      auth: {
+        mode: 'none'
+      }
+    }
+  };
+};
+
 const isBrunoConfigFile = (pathname, collectionPath) => {
   const dirname = path.dirname(pathname);
   const basename = path.basename(pathname);
 
-  return path.normalize(dirname) === path.normalize(collectionPath) && basename === 'bruno.json';
+  return pathsAreEqual(dirname, collectionPath) && basename === 'bruno.json';
 };
 
 const isEnvironmentsFolder = (pathname, collectionPath) => {
   const dirname = path.dirname(pathname);
   const envDirectory = path.join(collectionPath, 'environments');
 
-  return path.normalize(dirname) === path.normalize(envDirectory);
+  return pathsAreEqual(dirname, envDirectory);
 };
 
 const isFolderRootFile = (pathname, collectionPath) => {
@@ -87,7 +130,7 @@ const isCollectionRootFile = (pathname, collectionPath) => {
   const basename = path.basename(pathname);
 
   // return if we are not at the root of the collection
-  if (path.normalize(dirname) !== path.normalize(collectionPath)) {
+  if (!pathsAreEqual(dirname, collectionPath)) {
     return false;
   }
 
@@ -214,6 +257,7 @@ const unlinkEnvironmentFile = async (win, pathname, collectionUid) => {
       }
     };
 
+    deleteRequestUid(pathname);
     win.webContents.send('main:collection-tree-updated', 'unlinkEnvironmentFile', file);
   } catch (err) {
     console.error(err);
@@ -221,6 +265,10 @@ const unlinkEnvironmentFile = async (win, pathname, collectionUid) => {
 };
 
 const add = async (win, pathname, collectionUid, collectionPath, useWorkerThread, watcher) => {
+  const isDiscovering = watcher?.loadingStates?.[collectionUid]?.isDiscovering;
+  if (!isDiscovering && !preferencesUtil.isAutoRefreshEnabled()) {
+    return;
+  }
   console.log(`watcher add: ${pathname}`);
 
   if (isBrunoConfigFile(pathname, collectionPath)) {
@@ -341,6 +389,19 @@ const add = async (win, pathname, collectionUid, collectionPath, useWorkerThread
     const fileStats = fs.statSync(pathname);
     const content = fs.readFileSync(pathname, 'utf8');
 
+    if (!content || !content.trim()) {
+      file.data = createEmptyRequest(pathname);
+      file.partial = false;
+      file.loading = false;
+      file.size = sizeInMB(fileStats?.size ?? 0);
+      file.data.raw = content ?? '';
+      hydrateRequestWithUuid(file.data, pathname);
+      stageToCache(collectionPath, pathname, file.data);
+      win.webContents.send('main:collection-tree-updated', 'addFile', file);
+      watcher.markFileAsProcessed(win, collectionUid, pathname);
+      return;
+    }
+
     // If worker thread is not used, we can directly parse the file
     if (!useWorkerThread) {
       try {
@@ -428,10 +489,14 @@ const add = async (win, pathname, collectionUid, collectionPath, useWorkerThread
   }
 };
 
-const addDirectory = async (win, pathname, collectionUid, collectionPath) => {
+const addDirectory = async (win, pathname, collectionUid, collectionPath, watcher) => {
+  const isDiscovering = watcher?.loadingStates?.[collectionUid]?.isDiscovering;
+  if (!isDiscovering && !preferencesUtil.isAutoRefreshEnabled()) {
+    return;
+  }
   const envDirectory = path.join(collectionPath, 'environments');
 
-  if (path.normalize(pathname) === path.normalize(envDirectory)) {
+  if (pathsAreEqual(pathname, envDirectory)) {
     return;
   }
 
@@ -467,6 +532,9 @@ const addDirectory = async (win, pathname, collectionUid, collectionPath) => {
 };
 
 const change = async (win, pathname, collectionUid, collectionPath) => {
+  if (!preferencesUtil.isAutoRefreshEnabled()) {
+    return;
+  }
   if (isBrunoConfigFile(pathname, collectionPath)) {
     try {
       const content = fs.readFileSync(pathname, 'utf8');
@@ -588,14 +656,16 @@ const change = async (win, pathname, collectionUid, collectionPath) => {
       content = fs.readFileSync(pathname, 'utf8');
       fileStats = fs.statSync(pathname);
 
-      if (fileStats.size >= MAX_FILE_SIZE && format === 'bru') {
+      if (!content || !content.trim()) {
+        file.data = createEmptyRequest(pathname);
+      } else if (fileStats.size >= MAX_FILE_SIZE && format === 'bru') {
         // redacted parse — do not write the redacted data through to the cache
         file.data = await parseLargeRequestWithRedaction(content, 'bru');
       } else {
         file.data = await parseRequest(content, { format });
-        stageToCache(collectionPath, pathname, file.data);
       }
 
+      stageToCache(collectionPath, pathname, file.data);
       file.data.raw = content;
       file.size = sizeInMB(fileStats?.size);
       hydrateRequestWithUuid(file.data, pathname);
@@ -623,9 +693,13 @@ const unlink = (win, pathname, collectionUid, collectionPath) => {
     if (!fs.existsSync(collectionPath)) {
       return;
     }
+    if (!preferencesUtil.isAutoRefreshEnabled()) {
+      return;
+    }
     console.log(`watcher unlink: ${pathname}`);
     // drop the file from the snapshot regardless of type (request/env/config/folder root)
     unstageFromCache(collectionPath, pathname);
+    deleteRequestUid(pathname);
 
     if (isEnvironmentsFolder(pathname, collectionPath)) {
       return unlinkEnvironmentFile(win, pathname, collectionUid);
@@ -642,7 +716,7 @@ const unlink = (win, pathname, collectionUid, collectionPath) => {
       const basename = path.basename(pathname);
       const dirname = path.dirname(pathname);
 
-      if (basename === 'opencollection.yml' && path.normalize(dirname) === path.normalize(collectionPath)) {
+      if (basename === 'opencollection.yml' && pathsAreEqual(dirname, collectionPath)) {
         return;
       }
 
@@ -665,9 +739,12 @@ const unlinkDir = async (win, pathname, collectionUid, collectionPath) => {
     if (!fs.existsSync(collectionPath)) {
       return;
     }
+    if (!preferencesUtil.isAutoRefreshEnabled()) {
+      return;
+    }
     const envDirectory = path.join(collectionPath, 'environments');
 
-    if (path.normalize(pathname) === path.normalize(envDirectory)) {
+    if (pathsAreEqual(pathname, envDirectory)) {
       return;
     }
 
@@ -695,6 +772,7 @@ const unlinkDir = async (win, pathname, collectionUid, collectionPath) => {
         name
       }
     };
+    deleteRequestUid(pathname);
     win.webContents.send('main:collection-tree-updated', 'unlinkDir', directory);
   } catch (err) {
     console.error(`Error processing unlinkDir event for: ${pathname}`, err);
@@ -872,13 +950,19 @@ class CollectionWatcher {
           return true;
         }
 
-        // Fast-path ignore common build/cache directories before disk lstat
-        if (fastIgnoreRegex.test(filepath)) {
-          return true;
-        }
-
         const normalizedPath = normalizeAndResolvePath(filepath);
         const relativePath = path.relative(watchPath, normalizedPath);
+
+        if (!relativePath || relativePath === '.') {
+          return false;
+        }
+
+        const normalizedRelativePath = relativePath.split(path.sep).join('/');
+
+        // Fast-path ignore common build/cache directories before disk lstat
+        if (fastIgnoreRegex.test(`/${normalizedRelativePath}/`)) {
+          return true;
+        }
 
         // Check if any path segment matches a default ignore pattern (handles symlinks)
         const pathSegments = relativePath.split(path.sep);
@@ -894,7 +978,6 @@ class CollectionWatcher {
 
         const userIgnores = getBrunoConfig(collectionUid)?.ignore || [];
         const ignores = [...new Set([...defaultIgnores, ...userIgnores])];
-        const normalizedRelativePath = relativePath.split(path.sep).join('/');
 
         return ignores.some((ignorePattern) => {
           const normalizedIgnorePattern = ignorePattern.replace(/\\/g, '/');
@@ -918,7 +1001,7 @@ class CollectionWatcher {
     watcher
       .on('ready', () => onWatcherSetupComplete(win, watchPath, collectionUid, this, workspacePathname))
       .on('add', (pathname) => add(win, pathname, collectionUid, watchPath, useWorkerThread, this))
-      .on('addDir', (pathname) => addDirectory(win, pathname, collectionUid, watchPath))
+      .on('addDir', (pathname) => addDirectory(win, pathname, collectionUid, watchPath, this))
       .on('change', (pathname) => change(win, pathname, collectionUid, watchPath))
       .on('unlink', (pathname) => unlink(win, pathname, collectionUid, watchPath))
       .on('unlinkDir', (pathname) => unlinkDir(win, pathname, collectionUid, watchPath))
@@ -983,6 +1066,9 @@ class CollectionWatcher {
       const absCollectionPath = path.resolve(collectionPath);
       const absItemPath = path.resolve(itemPath);
 
+      if (process.platform === 'win32') {
+        return absItemPath.toLowerCase().startsWith(absCollectionPath.toLowerCase());
+      }
       return absItemPath.startsWith(absCollectionPath);
     });
 

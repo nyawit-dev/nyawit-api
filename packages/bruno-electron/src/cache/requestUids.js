@@ -15,28 +15,40 @@ const requestUids = new Map();
 const exampleUids = new Map();
 const { uuid } = require('../utils/common');
 
+const normalizePathKey = (pathname) => {
+  if (typeof pathname !== 'string') return pathname;
+  let resolved = path.resolve(pathname);
+  if (process.platform === 'win32') {
+    resolved = resolved.toLowerCase();
+  }
+  return resolved;
+};
+
 const getRequestUid = (pathname) => {
-  let uid = requestUids.get(pathname);
+  const key = normalizePathKey(pathname);
+  let uid = requestUids.get(key);
 
   if (!uid) {
     uid = uuid();
-    requestUids.set(pathname, uid);
+    requestUids.set(key, uid);
   }
 
   return uid;
 };
 
 const moveRequestUid = (oldPathname, newPathname) => {
-  const uid = requestUids.get(oldPathname);
+  const oldKey = normalizePathKey(oldPathname);
+  const newKey = normalizePathKey(newPathname);
+  const uid = requestUids.get(oldKey);
 
   if (uid) {
-    requestUids.delete(oldPathname);
-    requestUids.set(newPathname, uid);
+    requestUids.delete(oldKey);
+    requestUids.set(newKey, uid);
   }
 };
 
 const deleteRequestUid = (pathname) => {
-  requestUids.delete(pathname);
+  requestUids.delete(normalizePathKey(pathname));
 };
 
 /**
@@ -46,7 +58,7 @@ const deleteRequestUid = (pathname) => {
  * inheriting uids tied to files that may no longer exist or mean something else.
  */
 const clearRequestUidsForCollection = (collectionPath) => {
-  const root = path.resolve(collectionPath);
+  const root = normalizePathKey(collectionPath);
   const prefix = root.endsWith(path.sep) ? root : root + path.sep;
 
   for (const key of requestUids.keys()) {
@@ -63,11 +75,13 @@ const clearRequestUidsForCollection = (collectionPath) => {
 };
 
 const getExampleUid = (pathname, index) => {
-  let uid = exampleUids.get(`${pathname}-${index}`);
+  const baseKey = normalizePathKey(pathname);
+  const key = `${baseKey}-${index}`;
+  let uid = exampleUids.get(key);
 
   if (!uid) {
     uid = uuid();
-    exampleUids.set(`${pathname}-${index}`, uid);
+    exampleUids.set(key, uid);
   }
 
   return uid;
@@ -81,9 +95,10 @@ const getExampleUid = (pathname, index) => {
  * @param {Array} examples - The examples array being saved (each with a uid property)
  */
 const syncExampleUidsCache = (pathname, examples = []) => {
+  const baseKey = normalizePathKey(pathname);
   // Clear all existing cache entries for this pathname
   for (const key of exampleUids.keys()) {
-    if (key.startsWith(`${pathname}-`)) {
+    if (key.startsWith(`${baseKey}-`)) {
       exampleUids.delete(key);
     }
   }
@@ -91,7 +106,7 @@ const syncExampleUidsCache = (pathname, examples = []) => {
   // Rebuild cache with current example UIDs at their new indices
   examples.forEach((example, index) => {
     if (example.uid) {
-      exampleUids.set(`${pathname}-${index}`, example.uid);
+      exampleUids.set(`${baseKey}-${index}`, example.uid);
     }
   });
 };

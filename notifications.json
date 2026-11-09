@@ -1,12 +1,24 @@
 {
   "version": "1.0",
-  "updatedAt": "2026-11-06T11:00:00.000Z",
+  "updatedAt": "2026-11-09T11:45:00.000Z",
   "notifications": [
+    {
+      "id": "nyawitapi-v230-announcement",
+      "type": "Nyawit API",
+      "source": "Nyawit API",
+      "pinned": true,
+      "ignoreInstallDate": true,
+      "title": "Nyawit API v2.3.0 Resmi Dirilis! 🚀",
+      "description": "### Selamat Datang di Nyawit API v2.3.0\n\nVersi v2.3.0 menghadirkan sinkronisasi file otomatis secara instan, perbaikan komprehensif file watcher multi-platform, dan integrasi penuh Clone Git Repository:\n\n#### ✨ Pembaruan & Fitur Baru Utama:\n- **Sinkronisasi Otomatis Real-time (Auto-Sync & Auto-Refresh)**: Perubahan pada file `.bru` dan `.yml` yang dilakukan melalui editor eksternal (VS Code, Cursor, Vim, Git branch switch) langsung terdeteksi dan diperbarui secara instan di UI tanpa perlu restart aplikasi.\n- **Pengaturan Auto-Sync Fleksibel**: Opsi toggle Auto-sync file changes di Preferences (General), dengan tombol Reload Collection manual di klik kanan sidebar.\n- **Normalisasi Path Windows & Penanganan Edge Case**: Menyelesaikan inkonsistensi drive letter case (C: vs c:), pembersihan ghost tab saat file dihapus, dan toleransi file kosong saat staging.\n- **Clone Git Repository Terintegrasi**: Fitur clone repositori remote langsung dari Git Studio, menu Collections (+), dan halaman Workspace Overview, lengkap dengan deteksi branch otomatis.\n\nKunjungi repositori resmi kami di [nyawit-dev/nyawit-api](https://github.com/nyawit-dev/nyawit-api) untuk dokumentasi lengkap!",
+      "color": "#00f0ff",
+      "date": "2026-11-09T11:45:00.000Z",
+      "active": true
+    },
     {
       "id": "nyawitapi-v220-announcement",
       "type": "Nyawit API",
       "source": "Nyawit API",
-      "pinned": true,
+      "pinned": false,
       "ignoreInstallDate": true,
       "title": "Nyawit API v2.2.0 Resmi Dirilis! 🚀",
       "description": "### Selamat Datang di Nyawit API v2.2.0\n\nNyawit API adalah IDE API lokal-pertama (Local-First API IDE) yang cepat, aman, dan ramah Git, dibangun serta dimodifikasi secara ekstensif berbasis repositori open-source **[Bruno](https://github.com/usebruno/bruno)**.\n\n#### ✨ Peningkatan & Pembaruan Utama di v2.2.0:\n- **Sinkronisasi Upstream Terbaru**: Menggabungkan 84 pembaruan dari upstream Bruno (masking nilai rahasia/secret pada ekspor OpenAPI, deteksi encoding teks UTF-8, paste form body cURL yang lebih akurat, perbaikan Windows Git longpaths, dan peningkatan navigasi pencarian CodeMirror).\n- **Rebranding Resmi**: Transformasi menyeluruh identitas aplikasi dan repositori ke **Nyawit API** ([nyawit-dev/nyawit-api](https://github.com/nyawit-dev/nyawit-api)).\n- **Nyawit Git Studio Terintegrasi**: Mengontrol branch, staging file, diff viewer, commit, push, dan pull langsung dari tab workspace editor.\n- **Command Palette (`Ctrl+K` / `Cmd+K`)**: Navigasi instan ke seluruh koleksi, request, dokumentasi, dan aksi cepat.\n- **Pembaruan Otomatis In-App**: Dialog progres download real-time, estimasi kecepatan transfer, dan bypass Authenticode untuk kelancaran update komunitas.\n\nKunjungi repositori resmi kami di [nyawit-dev/nyawit-api](https://github.com/nyawit-dev/nyawit-api) untuk dokumentasi lengkap dan rilis terbaru!",

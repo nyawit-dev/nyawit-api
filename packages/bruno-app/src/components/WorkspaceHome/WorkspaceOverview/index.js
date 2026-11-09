@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { IconPlus, IconFolder, IconDownload } from '@tabler/icons';
+import { IconPlus, IconFolder, IconDownload, IconBrandGit } from '@tabler/icons';
 import { importCollection, importCollectionFromZip } from 'providers/ReduxStore/slices/collections/actions';
 import { setIsCreatingCollection, setIsOpeningCollection, toggleSidebarCollapse } from 'providers/ReduxStore/slices/app';
 import { setLocalStorageValue, SIDEBAR_COLLAPSED_KEY } from 'utils/common/localStorage';
@@ -178,6 +178,17 @@ const WorkspaceOverview = ({ workspace }) => {
                 onClick={handleImportCollection}
               >
                 Import Collection
+              </Button>
+              <Button
+                color="light"
+                size="sm"
+                icon={<IconBrandGit size={14} strokeWidth={1.5} />}
+                onClick={() => {
+                  setGitRepositoryUrl(null);
+                  setShowCloneGitModal(true);
+                }}
+              >
+                Clone Repository
               </Button>
             </div>
           </div>

@@ -252,12 +252,12 @@ jobs:
             Local-first, git-friendly API IDE and client for modern developers.
 
             #### What's New in v${{ steps.release_info.outputs.version }}:
-            - **Seamless In-App Auto-Updates**: Direct background updates powered by `electron-updater` with live titlebar progress and one-click restart installation (no manual downloading or installer wizard needed).
-            - **Performance & Startup Optimization**: Resolved application freezing and 'Not Responding' on launch when loading large workspaces or collections.
-            - **Non-blocking Tree Traversal**: Zero-allocation collection loading, O(1) early exit search, and background worker parsing.
-            - **TypeScript Migration**: Converted core collections search, sidebar flattening, and export modules to TypeScript for enhanced reliability.
-            - **V2 SQLite Cache**: High-performance persistent collection caching enabled by default with intelligent filesystem ignore filters.
-            - **Bug Fixes**: Fixed network request timeline reassignment and safe token encryption handling in Electron main process.
+            - **Real-Time Auto-Sync & Auto-Refresh**: Instant live synchronization for `.bru` and `.yml` request files modified by external editors (VS Code, Cursor, Git branch switches) without application reloads.
+            - **Flexible Auto-Sync Preferences**: Configurable auto-sync toggle under Preferences (General) with manual Reload Collection on sidebar context menu.
+            - **Integrated Git Clone Repository**: Clone remote Git repositories directly from Git Studio, Collections sidebar (+), and Workspace Overview.
+            - **Automatic Branch Detection**: Proactive remote branch querying with debounced URL loading, default branch auto-selection, and custom branch manual fallback.
+            - **Windows Path & Cache Reliability**: Normalized case-insensitive drive letter matching (`C:` vs `c:`), path separator sanitization, ghost tab auto-cleanup, and graceful empty file staging.
+            - **Performance & Background Watcher**: Debounced file change processing preventing high CPU/disk thrashing during large multi-file operations.
 
             #### Download Assets:
             - **Windows**: `NyawitApi_${{ steps.release_info.outputs.version }}_x64_win.exe` (NSIS Installer)

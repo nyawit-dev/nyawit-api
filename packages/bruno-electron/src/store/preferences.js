@@ -70,6 +70,9 @@ const defaultPreferences = {
     enabled: false,
     interval: 1000
   },
+  fileWatcher: {
+    autoRefresh: true
+  },
   display: {
     zoomPercentage: 100
   },
@@ -197,6 +200,9 @@ const preferencesSchema = Yup.object().shape({
     enabled: Yup.boolean(),
     interval: Yup.number().min(100)
   }),
+  fileWatcher: Yup.object({
+    autoRefresh: Yup.boolean().optional()
+  }).optional(),
   display: Yup.object({
     zoomPercentage: Yup.number().min(50).max(150)
   }),
@@ -455,6 +461,9 @@ const preferencesUtil = {
   },
   isFileCacheEnabled: () => {
     return get(getPreferences(), 'cache.file.enabled', true);
+  },
+  isAutoRefreshEnabled: () => {
+    return get(getPreferences(), 'fileWatcher.autoRefresh', true);
   },
   hasLaunchedBefore: () => {
     return get(getPreferences(), 'onboarding.hasLaunchedBefore', false);

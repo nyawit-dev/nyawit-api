@@ -83,7 +83,10 @@ import {
   toggleCollection,
   expandCollection,
   expandItem,
-  setSidebarSelection
+  setSidebarSelection,
+  collectionChangeFileEvent,
+  collectionUnlinkFileEvent,
+  collectionUnlinkDirectoryEvent
 } from './index';
 
 import { each } from 'lodash';
@@ -216,11 +219,13 @@ export const saveFile = (content, itemUid, collectionUid, silent = false) => asy
   }
 
   const { ipcRenderer } = window;
+  let parsedJson = null;
   try {
     if (['http-request', 'graphql-request'].includes(item?.type)) {
       const json = await ipcRenderer.invoke('renderer:convert-to-json', item, content, collection.format);
       delete json.isTransient;
       await itemSchema.validate(json);
+      parsedJson = json;
     }
   } catch (err) {
     if (!silent) {
@@ -231,6 +236,42 @@ export const saveFile = (content, itemUid, collectionUid, silent = false) => asy
 
   try {
     await ipcRenderer.invoke('renderer:save-file', item.pathname, content);
+    if (parsedJson) {
+      dispatch(
+        collectionChangeFileEvent({
+          file: {
+            meta: {
+              collectionUid,
+              pathname: item.pathname,
+              name: item.filename || item.name
+            },
+            data: {
+              ...parsedJson,
+              uid: item.uid,
+              raw: content
+            }
+          }
+        })
+      );
+    } else {
+      dispatch(
+        collectionChangeFileEvent({
+          file: {
+            meta: {
+              collectionUid,
+              pathname: item.pathname,
+              name: item.filename || item.name
+            },
+            data: {
+              uid: item.uid,
+              name: item.name,
+              type: item.type,
+              raw: content
+            }
+          }
+        })
+      );
+    }
     if (!silent) {
       toast.success('File saved successfully!');
     }
@@ -1100,6 +1141,30 @@ export const deleteItem = (itemUid, collectionUid) => (dispatch, getState) => {
               await dispatch(updateItemsSequences({ itemsToResequence: reorderedSourceItems, collectionUid }));
             }
           }
+          if (item.type === 'folder') {
+            dispatch(
+              collectionUnlinkDirectoryEvent({
+                directory: {
+                  meta: {
+                    collectionUid,
+                    pathname: item.pathname
+                  }
+                }
+              })
+            );
+          } else {
+            dispatch(
+              collectionUnlinkFileEvent({
+                file: {
+                  meta: {
+                    collectionUid,
+                    pathname: item.pathname
+                  }
+                }
+              })
+            );
+          }
+          dispatch(_closeTabs({ tabUids: [item.uid], reopenable: false }));
           resolve();
         })
         .catch((error) => reject(error));

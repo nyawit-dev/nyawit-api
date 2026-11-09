@@ -3259,7 +3259,13 @@ export const collectionsSlice = createSlice({
       }
 
       if (collection) {
-        const item = findItemInCollection(collection, file.data.uid);
+        let item = file?.data?.uid ? findItemInCollection(collection, file.data.uid) : null;
+        if (!item && file.meta?.pathname) {
+          item = findItemInCollectionByPathname(collection, file.meta.pathname);
+          if (item && file.data?.uid) {
+            item.uid = file.data.uid;
+          }
+        }
 
         if (item) {
           item.partial = file.partial;
@@ -3295,7 +3301,8 @@ export const collectionsSlice = createSlice({
               // This preserves characters typed during autosave
               // The raw comparison is guarded so an undefined === undefined match
               // (when neither side has raw content) does not wipe a genuine draft
-              const draftRawMatchesFile = item.draft?.raw !== undefined && item.draft.raw === file.data.raw;
+              const normalizeEol = (t) => (typeof t === 'string' ? t.replace(/\r\n/g, '\n') : t);
+              const draftRawMatchesFile = item.draft?.raw !== undefined && normalizeEol(item.draft.raw) === normalizeEol(file.data.raw);
               if (item.draft && (areItemsTheSameExceptSeqUpdate(item.draft, file.data) || draftRawMatchesFile)) {
                 item.draft = null;
               }
@@ -3313,7 +3320,8 @@ export const collectionsSlice = createSlice({
             item.pathname = file.meta.pathname;
             item.raw = file.data.raw;
             item.size = file.size;
-            if (!item.draft || item.draft.raw === file.data.raw) {
+            const normalizeEol = (t) => (typeof t === 'string' ? t.replace(/\r\n/g, '\n') : t);
+            if (!item.draft || normalizeEol(item.draft.raw) === normalizeEol(file.data.raw)) {
               item.draft = null;
             }
           }
