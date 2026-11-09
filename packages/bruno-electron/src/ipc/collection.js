@@ -186,6 +186,14 @@ const resolveEnvironmentFilePath = (collectionPathname, environmentName, format)
     throw new Error(`environment: ${environmentName} is not a valid environment name`);
   }
 
+  if (!fs.existsSync(envFilePath)) {
+    const altFormat = format === 'bru' ? 'yml' : 'bru';
+    const altFilePath = path.join(envDirPath, `${environmentName}.${altFormat}`);
+    if (fs.existsSync(altFilePath)) {
+      return altFilePath;
+    }
+  }
+
   return envFilePath;
 };
 
@@ -788,6 +796,7 @@ const registerRendererEventHandlers = (mainWindow, watcher) => {
     try {
       const format = getCollectionFormat(collectionPathname);
       const envFilePath = resolveEnvironmentFilePath(collectionPathname, environment.name, format);
+      const fileFormat = envFilePath.endsWith('.yml') ? 'yml' : (envFilePath.endsWith('.bru') ? 'bru' : format);
 
       const envDirPath = path.dirname(envFilePath);
       if (!fs.existsSync(envDirPath)) {
@@ -808,7 +817,7 @@ const registerRendererEventHandlers = (mainWindow, watcher) => {
           environmentSecretsStore.storeEnvSecrets(collectionPathname, environment);
         }
 
-        const content = await stringifyEnvironment(environment, { format });
+        const content = await stringifyEnvironment(environment, { format: fileFormat });
         const existing = fs.readFileSync(envFilePath, 'utf8');
         if (content === existing) return; // skip write if content unchanged
         await writeFile(envFilePath, content);
@@ -968,6 +977,7 @@ const registerRendererEventHandlers = (mainWindow, watcher) => {
     try {
       const format = getCollectionFormat(collectionPathname);
       const envFilePath = resolveEnvironmentFilePath(collectionPathname, environmentName, format);
+      const fileFormat = envFilePath.endsWith('.yml') ? 'yml' : (envFilePath.endsWith('.bru') ? 'bru' : format);
 
       if (!fs.existsSync(envFilePath)) {
         throw new Error(`environment: ${envFilePath} does not exist`);
@@ -975,7 +985,7 @@ const registerRendererEventHandlers = (mainWindow, watcher) => {
 
       await withFileLock(envFilePath, async () => {
         const fileContent = fs.readFileSync(envFilePath, 'utf8');
-        const environment = parseEnvironment(fileContent, { format });
+        const environment = parseEnvironment(fileContent, { format: fileFormat });
 
         if (inheritedEnvironmentName) {
           environment.extends = inheritedEnvironmentName;
@@ -983,7 +993,7 @@ const registerRendererEventHandlers = (mainWindow, watcher) => {
           delete environment.extends;
         }
 
-        const updatedContent = stringifyEnvironment(environment, { format });
+        const updatedContent = stringifyEnvironment(environment, { format: fileFormat });
         await writeFile(envFilePath, updatedContent);
       });
     } catch (error) {
@@ -996,6 +1006,7 @@ const registerRendererEventHandlers = (mainWindow, watcher) => {
     try {
       const format = getCollectionFormat(collectionPathname);
       const envFilePath = resolveEnvironmentFilePath(collectionPathname, environmentName, format);
+      const fileFormat = envFilePath.endsWith('.yml') ? 'yml' : (envFilePath.endsWith('.bru') ? 'bru' : format);
 
       if (!fs.existsSync(envFilePath)) {
         throw new Error(`environment: ${envFilePath} does not exist`);
@@ -1003,9 +1014,9 @@ const registerRendererEventHandlers = (mainWindow, watcher) => {
 
       await withFileLock(envFilePath, async () => {
         const fileContent = fs.readFileSync(envFilePath, 'utf8');
-        const environment = parseEnvironment(fileContent, { format });
+        const environment = parseEnvironment(fileContent, { format: fileFormat });
         environment.color = color;
-        const updatedContent = stringifyEnvironment(environment, { format });
+        const updatedContent = stringifyEnvironment(environment, { format: fileFormat });
         await writeFile(envFilePath, updatedContent);
       });
     } catch (error) {

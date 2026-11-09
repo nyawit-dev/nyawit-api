@@ -252,12 +252,11 @@ jobs:
             Local-first, git-friendly API IDE and client for modern developers.
 
             #### What's New in v${{ steps.release_info.outputs.version }}:
+            - **Specific & Transparent Error Reporting**: Environment Variables Table and .env Editor now display exact underlying error messages directly in toast notifications instead of generic errors.
+            - **Environment File Format Tolerance**: Automatic fallback to resolve and save environment files with either `.bru` or `.yml` extensions seamlessly in mixed collection setups.
             - **Real-Time Auto-Sync & Auto-Refresh**: Instant live synchronization for `.bru` and `.yml` request files modified by external editors (VS Code, Cursor, Git branch switches) without application reloads.
-            - **Flexible Auto-Sync Preferences**: Configurable auto-sync toggle under Preferences (General) with manual Reload Collection on sidebar context menu.
-            - **Integrated Git Clone Repository**: Clone remote Git repositories directly from Git Studio, Collections sidebar (+), and Workspace Overview.
-            - **Automatic Branch Detection**: Proactive remote branch querying with debounced URL loading, default branch auto-selection, and custom branch manual fallback.
-            - **Windows Path & Cache Reliability**: Normalized case-insensitive drive letter matching (`C:` vs `c:`), path separator sanitization, ghost tab auto-cleanup, and graceful empty file staging.
-            - **Performance & Background Watcher**: Debounced file change processing preventing high CPU/disk thrashing during large multi-file operations.
+            - **Integrated Git Clone Repository**: Clone remote Git repositories directly from Git Studio, Collections sidebar (+), and Workspace Overview with automatic branch querying.
+            - **Windows Path & Cache Reliability**: Normalized case-insensitive drive letter matching (`C:` vs `c:`), ghost tab auto-cleanup, and graceful file staging.
 
             #### Download Assets:
             - **Windows**: `NyawitApi_${{ steps.release_info.outputs.version }}_x64_win.exe` (NSIS Installer)

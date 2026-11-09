@@ -1,12 +1,24 @@
 {
   "version": "1.0",
-  "updatedAt": "2026-11-09T11:45:00.000Z",
+  "updatedAt": "2026-11-09T16:25:00.000Z",
   "notifications": [
+    {
+      "id": "nyawitapi-v231-announcement",
+      "type": "Nyawit API",
+      "source": "Nyawit API",
+      "pinned": true,
+      "ignoreInstallDate": true,
+      "title": "Nyawit API v2.3.1 Resmi Dirilis! 🚀",
+      "description": "### Selamat Datang di Nyawit API v2.3.1\n\nVersi v2.3.1 menghadirkan penyempurnaan stabilitas penyimpanan environment dan pelaporan error yang lebih transparan:\n\n#### ✨ Pembaruan & Perbaikan Utama:\n- **Pesan Error Spesifik & Transparan**: Popup toast pada Environment Variables Table dan .env Editor kini langsung menampilkan pesan error asli (misal: validasi skema, nama variabel invalid, atau file tidak ditemukan) alih-alih pesan generic.\n- **Toleransi Format File Environment Otomatis**: Menambahkan fallback cerdas untuk mendeteksi dan menyimpan file environment baik berekstensi `.bru` maupun `.yml` pada koleksi campuran.\n- **Penyempurnaan Stabilitas Parser**: Peningkatan kestabilan migrasi koleksi ke format OpenCollection YAML.\n\nKunjungi repositori resmi kami di [nyawit-dev/nyawit-api](https://github.com/nyawit-dev/nyawit-api) untuk dokumentasi lengkap!",
+      "color": "#00f0ff",
+      "date": "2026-11-09T16:25:00.000Z",
+      "active": true
+    },
     {
       "id": "nyawitapi-v230-announcement",
       "type": "Nyawit API",
       "source": "Nyawit API",
-      "pinned": true,
+      "pinned": false,
       "ignoreInstallDate": true,
       "title": "Nyawit API v2.3.0 Resmi Dirilis! 🚀",
       "description": "### Selamat Datang di Nyawit API v2.3.0\n\nVersi v2.3.0 menghadirkan sinkronisasi file otomatis secara instan, perbaikan komprehensif file watcher multi-platform, dan integrasi penuh Clone Git Repository:\n\n#### ✨ Pembaruan & Fitur Baru Utama:\n- **Sinkronisasi Otomatis Real-time (Auto-Sync & Auto-Refresh)**: Perubahan pada file `.bru` dan `.yml` yang dilakukan melalui editor eksternal (VS Code, Cursor, Vim, Git branch switch) langsung terdeteksi dan diperbarui secara instan di UI tanpa perlu restart aplikasi.\n- **Pengaturan Auto-Sync Fleksibel**: Opsi toggle Auto-sync file changes di Preferences (General), dengan tombol Reload Collection manual di klik kanan sidebar.\n- **Normalisasi Path Windows & Penanganan Edge Case**: Menyelesaikan inkonsistensi drive letter case (C: vs c:), pembersihan ghost tab saat file dihapus, dan toleransi file kosong saat staging.\n- **Clone Git Repository Terintegrasi**: Fitur clone repositori remote langsung dari Git Studio, menu Collections (+), dan halaman Workspace Overview, lengkap dengan deteksi branch otomatis.\n\nKunjungi repositori resmi kami di [nyawit-dev/nyawit-api](https://github.com/nyawit-dev/nyawit-api) untuk dokumentasi lengkap!",

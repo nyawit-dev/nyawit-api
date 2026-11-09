@@ -751,7 +751,7 @@ const EnvironmentVariablesTable = ({
       })
       .catch((error) => {
         console.error(error);
-        toast.error('An error occurred while saving the changes');
+        toast.error(error?.message || 'An error occurred while saving the changes');
       });
   }, [formik.values, environment.variables, onSave, onDraftChange, onDraftClear, setIsModified, isSecretTab, buildSortOrder, sortMode]);
 
@@ -821,7 +821,7 @@ const EnvironmentVariablesTable = ({
     return onSave(cloneDeep(persistedVariables))
       .catch((error) => {
         console.error(error);
-        throw new Error('An error occurred while saving the changes');
+        throw new Error(error?.message || 'An error occurred while saving the changes');
       })
       .then(() => {
         onDraftClear();
