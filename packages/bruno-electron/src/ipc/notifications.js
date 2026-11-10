@@ -25,12 +25,20 @@ const getNotificationConfig = () => {
   try {
     const prefs = getPreferences();
     const notifPrefs = prefs?.notifications || {};
+    let customUrl = notifPrefs.customUrl || DEFAULT_NYAWIT_FEED;
+    if (customUrl && /ngaring/i.test(customUrl)) {
+      customUrl = DEFAULT_NYAWIT_FEED;
+      try {
+        if (prefs && prefs.notifications) {
+          prefs.notifications.customUrl = DEFAULT_NYAWIT_FEED;
+          savePreferences(prefs);
+        }
+      } catch (_) {}
+    }
     return {
       enableBruno: notifPrefs.enableBruno !== false,
       enableCustom: notifPrefs.enableCustom !== false,
-      customUrl: notifPrefs.customUrl && notifPrefs.customUrl.includes('ngaRing-Api')
-        ? DEFAULT_NYAWIT_FEED
-        : (notifPrefs.customUrl || DEFAULT_NYAWIT_FEED)
+      customUrl
     };
   } catch (err) {
     console.error('[Notifications] Failed to read preferences:', err);

@@ -116,7 +116,7 @@ const Support = () => {
             setNotifConfig({
               enableBruno: cfg.enableBruno !== false,
               enableCustom: cfg.enableCustom !== false,
-              customUrl: cfg.customUrl && cfg.customUrl.includes('ngaRing-Api')
+              customUrl: cfg.customUrl && /ngaring/i.test(cfg.customUrl)
                 ? DEFAULT_NYAWIT_FEED
                 : (cfg.customUrl || DEFAULT_NYAWIT_FEED)
             });

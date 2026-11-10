@@ -217,10 +217,6 @@ jobs:
             cd release-downloads/nyawitapi-web-dist
             zip -r ../../release-assets/NyawitApi-Web.zip .
             cd ../..
-          elif [ -d "release-downloads/ngaringapi-web-dist" ]; then
-            cd release-downloads/ngaringapi-web-dist
-            zip -r ../../release-assets/NyawitApi-Web.zip .
-            cd ../..
           fi
           ls -la release-assets/
 
