@@ -38,7 +38,7 @@ const commonPlugins = [
     declarationMap: false
   }),
   terser({
-    maxWorkers: Math.max(1, os.availableParallelism())
+    maxWorkers: 1
   })
 ];
 

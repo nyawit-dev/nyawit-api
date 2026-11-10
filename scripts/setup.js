@@ -112,12 +112,12 @@ async function setup() {
       forceInstallPlatformDeps();
 
       // Build packages with Bun
+      execCommand('bun run --cwd packages/bruno-schema-types tsc -p tsconfig.json', 'Building schema-types');
       execCommand('bun run --cwd packages/bruno-graphql-docs build', 'Building graphql-docs');
       execCommand('bun run --cwd packages/bruno-query rollup -c', 'Building bruno-query');
       execCommand('bun run --cwd packages/bruno-common rollup -c rollup.config.js', 'Building bruno-common');
       execCommand('bun run --cwd packages/bruno-converters rollup -c', 'Building bruno-converters');
       execCommand('bun run --cwd packages/bruno-requests rollup -c', 'Building bruno-requests');
-      execCommand('bun run --cwd packages/bruno-schema-types tsc -p tsconfig.json', 'Building schema-types');
       execCommand('bun run --cwd packages/bruno-filestore rollup -c && bun run --cwd packages/bruno-filestore tsc --emitDeclarationOnly -p tsconfig.build.json', 'Building bruno-filestore');
       execCommand('bun run --cwd packages/bruno-io rollup -c && bun run --cwd packages/bruno-io tsc --emitDeclarationOnly -p tsconfig.build.json', 'Building bruno-io');
       execCommand('bun run --cwd packages/bruno-sqlite scripts/generate-artifacts.ts && bun run --cwd packages/bruno-sqlite rollup -c', 'Building bruno-sqlite');
@@ -127,12 +127,12 @@ async function setup() {
       forceInstallPlatformDeps();
 
       // Build packages
+      execCommand('npm run build:schema-types', 'Building schema-types');
       execCommand('npm run build:graphql-docs', 'Building graphql-docs');
       execCommand('npm run build:bruno-query', 'Building bruno-query');
       execCommand('npm run build:bruno-common', 'Building bruno-common');
       execCommand('npm run build:bruno-converters', 'Building bruno-converters');
       execCommand('npm run build:bruno-requests', 'Building bruno-requests');
-      execCommand('npm run build:schema-types', 'Building schema-types');
       execCommand('npm run build:bruno-filestore', 'Building bruno-filestore');
       execCommand('npm run build:bruno-io', 'Building bruno-io');
       execCommand('npm run build:bruno-sqlite', 'Building bruno-sqlite');

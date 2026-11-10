@@ -36,7 +36,7 @@ module.exports = [
         declarationMap: false
       }),
       terser({
-        maxWorkers: Math.max(1, os.availableParallelism())
+        maxWorkers: 1
       })
     ],
     external: (id) => isBuiltin(id) || id.startsWith('@usebruno/')
