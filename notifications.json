@@ -1,12 +1,24 @@
 {
   "version": "1.0",
-  "updatedAt": "2026-11-10T02:45:00.000Z",
+  "updatedAt": "2026-11-10T05:25:00.000Z",
   "notifications": [
+    {
+      "id": "nyawitapi-v233-announcement",
+      "type": "Nyawit API",
+      "source": "Nyawit API",
+      "pinned": true,
+      "ignoreInstallDate": true,
+      "title": "Nyawit API v2.3.3 Resmi Dirilis! 🚀",
+      "description": "### Selamat Datang di Nyawit API v2.3.3\n\nVersi v2.3.3 menghadirkan standardisasi identitas dan pembersihan menyeluruh pada seluruh modul sistem:\n\n#### ✨ Pembaruan & Perbaikan Utama:\n- **Pembersihan & Standardisasi Total Branding**: Menghapus seluruh referensi lama yang tersisa di antarmuka notifikasi, preferensi, Redux state, dan skrip build, serta menyelaraskan identitas aplikasi 100% pada Nyawit API.\n- **Penyempurnaan Alur Feed Notifikasi**: Feed pengumuman kini langsung terhubung ke sumber resmi secara efisien tanpa pengecekan legacy.\n- **Stabilitas Build Multi-Platform Terverifikasi**: Menjaga integritas paket rilis Windows, Linux, dan macOS (Apple Silicon & Intel) secara konsisten.\n\nKunjungi repositori resmi kami di [nyawit-dev/nyawit-api](https://github.com/nyawit-dev/nyawit-api) untuk dokumentasi lengkap!",
+      "color": "#00f0ff",
+      "date": "2026-11-10T05:25:00.000Z",
+      "active": true
+    },
     {
       "id": "nyawitapi-v232-announcement",
       "type": "Nyawit API",
       "source": "Nyawit API",
-      "pinned": true,
+      "pinned": false,
       "ignoreInstallDate": true,
       "title": "Nyawit API v2.3.2 Resmi Dirilis! 🚀",
       "description": "### Selamat Datang di Nyawit API v2.3.2\n\nVersi v2.3.2 menghadirkan penyempurnaan stabilitas build engine dan perbaikan komprehensif pada ekosistem multi-platform:\n\n#### ✨ Pembaruan & Perbaikan Utama:\n- **Pencegahan Rollup Worker Deadlock di CI & macOS**: Mengoptimalkan worker parallelism pada Rollup terser plugin ke single-worker sequential mode guna mencegah process hang dan deadlock pada build runner macOS / Apple Silicon.\n- **Penyelarasan Urutan Build Schema-Types**: Memastikan paket `@usebruno/schema-types` dikompilasi terlebih dahulu sebelum modul konverter guna menjamin integritas tipe TypeScript saat instalasi.\n- **Penyempurnaan Stabilitas Penyimpanan Environment & Toleransi Format**: Dukungan penuh penyimpanan dan fallback otomatis untuk file `.bru` dan `.yml` serta pesan error toast yang transparan.\n\nKunjungi repositori resmi kami di [nyawit-dev/nyawit-api](https://github.com/nyawit-dev/nyawit-api) untuk dokumentasi lengkap!",
