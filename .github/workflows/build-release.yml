@@ -170,8 +170,6 @@ jobs:
           sudo mdutil -a -i off || true
           hdiutil detach /Volumes/NyawitApi* -force 2>/dev/null || true
           rm -rf /Volumes/NyawitApi* 2>/dev/null || true
-          hdiutil detach /Volumes/NgaRingApi* -force 2>/dev/null || true
-          rm -rf /Volumes/NgaRingApi* 2>/dev/null || true
 
       - name: Build Desktop Application
         run: node ./scripts/build-electron.js mac

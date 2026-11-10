@@ -152,7 +152,6 @@ async function main() {
       try {
         const { execSync } = require('child_process');
         execSync('hdiutil detach /Volumes/NyawitApi* -force 2>/dev/null || true');
-        execSync('hdiutil detach /Volumes/NgaRingApi* -force 2>/dev/null || true');
       } catch (_) {}
     }
 

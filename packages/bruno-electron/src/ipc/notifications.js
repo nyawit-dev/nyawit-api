@@ -25,20 +25,10 @@ const getNotificationConfig = () => {
   try {
     const prefs = getPreferences();
     const notifPrefs = prefs?.notifications || {};
-    let customUrl = notifPrefs.customUrl || DEFAULT_NYAWIT_FEED;
-    if (customUrl && /ngaring/i.test(customUrl)) {
-      customUrl = DEFAULT_NYAWIT_FEED;
-      try {
-        if (prefs && prefs.notifications) {
-          prefs.notifications.customUrl = DEFAULT_NYAWIT_FEED;
-          savePreferences(prefs);
-        }
-      } catch (_) {}
-    }
     return {
       enableBruno: notifPrefs.enableBruno !== false,
       enableCustom: notifPrefs.enableCustom !== false,
-      customUrl
+      customUrl: notifPrefs.customUrl || DEFAULT_NYAWIT_FEED
     };
   } catch (err) {
     console.error('[Notifications] Failed to read preferences:', err);

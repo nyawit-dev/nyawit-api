@@ -22,9 +22,9 @@ const NotificationList = ({ items, selectedId, onSelect }) => {
               }
             }}
           >
-            {(notification.source === 'Nyawit API' || notification.source === 'NgaRingApi' || notification.pinned) && (
+            {(notification.source === 'Nyawit API' || notification.pinned) && (
               <div className="flex items-center gap-1 mb-1">
-                {(notification.source === 'Nyawit API' || notification.source === 'NgaRingApi') && (
+                {notification.source === 'Nyawit API' && (
                   <span className="text-[9px] font-bold px-1 py-0.5 rounded bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 uppercase tracking-wider">
                     Nyawit API
                   </span>

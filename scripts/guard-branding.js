@@ -99,7 +99,6 @@ function guardBranding() {
       let nsh = fs.readFileSync(installerNshPath, 'utf8');
       nsh = nsh.replace(/"Publisher"\s+"[^"]*"/g, '"Publisher" "nyawit.dev"');
       nsh = nsh.replace(/!define MUI_WELCOMEPAGE_TITLE\s+"[^"]*"/g, '!define MUI_WELCOMEPAGE_TITLE "Nyawit API"');
-      nsh = nsh.replace(/com\.ngaringapi\.app/g, 'com.nyawitapi.app');
       fs.writeFileSync(installerNshPath, nsh);
       console.log('✓ Guarded packages/bruno-electron/resources/installer.nsh');
     } catch (err) {
