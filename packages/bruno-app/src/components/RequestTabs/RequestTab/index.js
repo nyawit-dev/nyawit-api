@@ -677,6 +677,7 @@ const RequestTab = ({ tab, collection, tabIndex, collectionRequestTabs, folderUi
       <div
         ref={tabLabelRef}
         className={`flex items-baseline tab-label ${tab.preview ? 'italic' : ''}`}
+        data-testid="request-tab-label"
         onContextMenu={handleRightClick}
         onDoubleClick={() => dispatch(makeTabPermanent({ uid: tab.uid }))}
         onMouseDown={handleMouseDown}
